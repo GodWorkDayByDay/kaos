@@ -34,7 +34,7 @@ namespace Kaos
             DialogResult result = MessageBox.Show("Save changes to this item?", "Save", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
-                App.executeSql("UPDATE barang SET Nama = '"+textBox2.Text+"' WHERE Kode = '"+textBox1.Text+"'");
+                App.executeNonQuery("UPDATE barang SET Nama = '"+textBox2.Text+"' WHERE Kode = '"+textBox1.Text+"'");
                 MessageBox.Show("Item changed successfully");
                 this.Close();
             }

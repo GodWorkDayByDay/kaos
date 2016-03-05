@@ -27,28 +27,25 @@ namespace Kaos
             return connstring.ToString();
         }
 
-        public static MySqlDataReader executeReader(string query)
+        public static DataTable executeReader(string query)
+
         {
-            MySqlConnection conn = new MySqlConnection(getConnectionString());
-            MySqlDataReader rdr;
-            try
+            DataTable results = new DataTable("Results");
+            using (MySqlConnection connection = new MySqlConnection(App.getConnectionString()))
             {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-                rdr = cmd.ExecuteReader();
-                //while (rdr.Read()){Console.WriteLine(rdr[0] + " -- " + rdr[1]);}
-                //rdr.Close();
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Connection.Open();
+                    command.ExecuteNonQuery();
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                        results.Load(reader);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-                rdr = null;
-            }
-       //     conn.Close();
-            return rdr;
+            return results;
         }
 
-        public static void executeSql(string query)
+        public static void executeNonQuery(string query)
         {
             MySqlConnection conn = new MySqlConnection(getConnectionString());
             try

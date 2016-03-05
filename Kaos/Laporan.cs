@@ -16,13 +16,14 @@ namespace Kaos
         public void loadLaporanPenjualan(DataGridView dgv, string tanggal)
         {
             MySqlConnection conn = new MySqlConnection(App.getConnectionString());
-            MySqlDataReader rdr = App.executeReader("SELECT * FROM penjualan WHERE Tanggal = '" + tanggal + "'");
+            DataTable rdr = App.executeReader("SELECT * FROM penjualan WHERE Tanggal = '" + tanggal + "'");
 
             double subtotal = 0;
 
-            while (rdr.Read())
+
+            foreach (DataRow row in rdr.Rows)
             {
-                dgv.Rows.Add(rdr[0], rdr[1], rdr[2], rdr[3], rdr[4], App.strtomoney(rdr[5].ToString()), App.strtomoney(rdr[6].ToString()), rdr[7]);
+                dgv.Rows.Add(row[0], row[1], row[2], row[3], row[4], App.strtomoney(row[5].ToString()), App.strtomoney(row[6].ToString()), row[7]);
             }
 
             for (int i = 1; i < dataGridView1.RowCount - 1; i++)
@@ -34,6 +35,9 @@ namespace Kaos
                 }
 
             }
+
+            label2.Text = "TOTAL: " + App.strtomoney(subtotal.ToString());
+
             //dataGridView1.Rows.Add("", "", "", "", "", "TOTAL:", App.strtomoney(subtotal.ToString()), "");
             //dataGridView1[5, dataGridView1.RowCount - 1].Style.Font =  new Font("Arial", 12, FontStyle.Bold);
             //dataGridView1[6, dataGridView1.RowCount - 1].Style.Font = new Font("Arial", 12, FontStyle.Bold);
@@ -43,19 +47,19 @@ namespace Kaos
             //dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.RowCount - 1;
 
             //dataGridView1[0, dataGridView1.RowCount - 1].Selected = true;
-            label2.Text = "TOTAL: " + App.strtomoney(subtotal.ToString());
+
         }
 
         public void loadLaporanPembelian(DataGridView dgv, string tanggal)
         {
             MySqlConnection conn = new MySqlConnection(App.getConnectionString());
-            MySqlDataReader rdr = App.executeReader("SELECT * FROM pembelian WHERE Tanggal = '" + tanggal + "'");
+            DataTable rdr = App.executeReader("SELECT * FROM pembelian WHERE Tanggal = '" + tanggal + "'");
 
             double subtotal = 0;
 
-            while (rdr.Read())
+            foreach (DataRow row in rdr.Rows)
             {
-                dgv.Rows.Add(rdr[0], rdr[1], rdr[2], rdr[3], rdr[4], App.strtomoney(rdr[5].ToString()), App.strtomoney(rdr[6].ToString()), rdr[7]);
+                dgv.Rows.Add(row[0], row[1], row[2], row[3], row[4], App.strtomoney(row[5].ToString()), App.strtomoney(row[6].ToString()), row[7]);
             }
 
             for (int i = 1; i < dataGridView1.RowCount - 1; i++)

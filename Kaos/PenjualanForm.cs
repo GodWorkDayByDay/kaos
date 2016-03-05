@@ -49,9 +49,9 @@ namespace Kaos
             string nomor = "";
             string urut;
 
-            if (Convert.ToString(result)!= "0")
+            if (Convert.ToString(result) != "0")
             {
-                urut = Convert.ToString(Convert.ToUInt32(result)+1);
+                urut = Convert.ToString(Convert.ToUInt32(result) + 1);
             }
             else
             {
@@ -87,13 +87,28 @@ namespace Kaos
         {
             if (label8.Text != "" && textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "")
             {
-                if (textBox2.Text == "0")
+                if (textBox2.Text == "0" || textBox2.Text == "")
                 {
                     textBox2.Text = "1";
                 }
 
-                dataGridView1.Rows.Add(textBox1.Text, label8.Text, textBox2.Text, textBox3.Text, App.strtomoney((Convert.ToDouble(textBox2.Text) * App.moneytodouble(textBox3.Text)).ToString()));
-                
+                bool newitem = true;
+                for (int i = 0; i < dataGridView1.RowCount; i++)
+                {
+                    if (textBox1.Text == dataGridView1[0, i].Value.ToString())
+                    {
+                        newitem = false;
+                        dataGridView1[2, i].Value = Convert.ToString(Convert.ToInt32(dataGridView1[2, i].Value.ToString()) + Convert.ToInt32(textBox2.Text));
+                        dataGridView1[4, i].Value = App.strtomoney(Convert.ToString(Convert.ToInt32(dataGridView1[2, i].Value.ToString()) * App.moneytodouble(dataGridView1[3, i].Value.ToString())));
+                    }
+                    
+                }
+
+                if (newitem == true)
+                {
+                    dataGridView1.Rows.Add(textBox1.Text, label8.Text, textBox2.Text, textBox3.Text, App.strtomoney((Convert.ToDouble(textBox2.Text) * App.moneytodouble(textBox3.Text)).ToString()));
+                }
+
                 total += ((Convert.ToDouble(textBox2.Text) * App.moneytodouble(textBox3.Text)));
                 label5.Text = "Total: " + App.strtomoney(total.ToString());
 
@@ -126,14 +141,23 @@ namespace Kaos
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            MySqlDataReader rdr = App.executeReader("SELECT Nama, Stok, Harga From barang WHERE Kode = '" + textBox1.Text + "'");
+            DataTable rdr = App.executeReader("SELECT Nama, Harga From barang WHERE Kode = '" + textBox1.Text + "'");
 
-            while (rdr.Read())
+            if (rdr.Rows.Count != 0)
             {
-                label8.Text = Convert.ToString(rdr[0]);
-                textBox2.Text = rdr[1].ToString();
-                textBox3.Text = App.strtomoney(rdr[2].ToString());
+                foreach (DataRow row in rdr.Rows)
+                {
+                    label8.Text = Convert.ToString(row[0]);
+                    textBox2.Text = "1";
+                    textBox3.Text = App.strtomoney(row[1].ToString());
+                }
 
+            }
+            else
+            {
+                label8.Text = "";
+                textBox2.Text = "";
+                textBox3.Text = "";
             }
         }
 
@@ -164,6 +188,11 @@ namespace Kaos
                 textBox1.Focus();
                 textBox1.SelectAll();
             }
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                inputPenjualan();
+            }
         }
 
         private void textBox3_KeyDown(object sender, KeyEventArgs e)
@@ -172,6 +201,47 @@ namespace Kaos
             {
                 textBox2.Focus();
                 textBox2.SelectAll();
+            }
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                inputPenjualan();
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (CariBarangForm cari = new CariBarangForm())
+            {
+                cari.ShowDialog();
+
+                textBox1.Text = cari.valueFromCari;
+                textBox2.Focus();
+                // do what ever with result...
+            }
+
+        }
+
+      
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            dataGridView1.ClearSelection();
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (textBox2.Text != "")
+                {
+                    int x = Convert.ToInt32(textBox2.Text);
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Masukkan jumlah angka saja jangan huruf!");
+                textBox2.Text = "";
             }
         }
     }
