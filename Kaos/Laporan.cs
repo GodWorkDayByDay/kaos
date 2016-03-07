@@ -26,12 +26,25 @@ namespace Kaos
                 dgv.Rows.Add(row[0], row[1], row[2], row[3], row[4], App.strtomoney(row[5].ToString()), App.strtomoney(row[6].ToString()), row[7]);
             }
 
-            for (int i = 1; i < dataGridView1.RowCount - 1; i++)
+            string lastfaktur = "";
+            try
+            {
+                lastfaktur = dataGridView1[1, 0].Value.ToString();
+            }
+            catch (Exception)
+            {
+            }
+             
+            for (int i = 1; i < dataGridView1.RowCount; i++)
             {
                 subtotal += App.moneytodouble(dataGridView1[6, i].Value.ToString());
-                if (dataGridView1[1, i - 1].Value.ToString() == dataGridView1[1, i].Value.ToString())
+                if (lastfaktur == dataGridView1[1, i].Value.ToString())
                 {
                     dataGridView1.Rows[i].Cells[1].Value = "";
+                }
+                else
+                {
+                    lastfaktur = dataGridView1.Rows[i].Cells[1].Value.ToString();
                 }
 
             }
@@ -62,10 +75,10 @@ namespace Kaos
                 dgv.Rows.Add(row[0], row[1], row[2], row[3], row[4], App.strtomoney(row[5].ToString()), App.strtomoney(row[6].ToString()), row[7]);
             }
 
-            for (int i = 1; i < dataGridView1.RowCount - 1; i++)
+            for (int i = 1; i < dataGridView1.RowCount; i++)
             {
                 subtotal += App.moneytodouble(dataGridView1[6, i].Value.ToString());
-                if (dataGridView1[1, i - 1].Value.ToString() == dataGridView1[1, i].Value.ToString())
+                if (dataGridView1[1, i - 1].Value.ToString() == dataGridView1[1, i].Value.ToString() || dataGridView1[1, i - 1].Value.ToString() == "")
                 {
                     dataGridView1.Rows[i].Cells[1].Value = "";
                 }

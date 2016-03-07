@@ -162,6 +162,12 @@ namespace Kaos
             }
         }
 
+        public static string doubletomoney(object amount)
+        {
+            string money = Convert.ToString(amount);
+            return strtomoney(money);
+        }
+
         public static void formatDataGridView(DataGridView dgv)
         {
             dgv.MultiSelect = false;
@@ -178,5 +184,87 @@ namespace Kaos
 
         }
 
+        public static int cInt(object obj)
+        {
+            return Convert.ToInt32(obj);
+        }
+
+        public static double cDouble(object obj)
+        {
+            return Convert.ToDouble(obj);
+        }
+
+        public static string stripMoney(string money)
+        {
+            money = money.Replace("Rp", "");
+            money = money.Replace(".", "");
+            return money;
+        }
+
+        public static void shellCommand(string cmdtext)
+        {
+            var proc1 = new System.Diagnostics.ProcessStartInfo();
+            proc1.UseShellExecute = true;
+
+            proc1.WorkingDirectory = @"C:\Windows\System32";
+
+            proc1.FileName = @"C:\Windows\System32\cmd.exe";
+            //proc1.Verb = "runas";
+            proc1.Arguments = "/c " + cmdtext;
+            proc1.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            System.Diagnostics.Process.Start(proc1);
+        }
+
+
+        public static void printPenjualan(string faktur, string sales)
+        {
+            DateTime tgl = DateTime.Now;
+            DataTable rs = executeReader("SELECT * FROM penjualan WHERE Faktur = '"+faktur+"'");
+
+            //PRINT INVOICE
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(Convert.ToChar(27) + "a1" + Convert.ToChar(27) + "!4" + "Toko B.H. [KAOS]");
+            sb.AppendLine("Tasikmalaya");
+            sb.AppendLine(Convert.ToChar(27) + "@");
+            sb.AppendLine("Faktur: " + faktur + " Sales: " + sales);
+            sb.AppendLine("Tanggal: " + tgl.ToShortDateString() + " Jam: " + tgl.ToShortTimeString());
+            sb.AppendLine("");
+            sb.AppendLine("=========================================");
+
+            double total = 0;
+            int qty = 0;
+            int i = 1;
+            foreach (DataRow row in rs.Rows)
+            {
+                sb.AppendLine(Left((i.ToString() + ". " + row[3].ToString()),40));
+                sb.AppendLine("   " + strtomoney(row[5].ToString()) + Convert.ToChar(9) + "x" + Convert.ToChar(9) + row[4].ToString() + Convert.ToChar(9) + strtomoney(row[6].ToString()));
+                total += Convert.ToDouble(row[6]);
+                qty += Convert.ToInt32(row[4]);
+                i += 1;
+            }
+
+            sb.AppendLine("-----------------------------------------");
+            sb.AppendLine("   Qty: " + qty.ToString() + Convert.ToChar(9) + Convert.ToChar(9) + " TOTAL: " + strtomoney(total.ToString()));
+            sb.AppendLine("");
+
+            sb.AppendLine(Convert.ToChar(29) + "VA0");
+
+
+            System.IO.File.WriteAllText(@"C:\test\invoicekaos.txt", sb.ToString());
+
+            shellCommand("copy c:\\test\\invoicekaos.txt \\\\mbs-pc\\epson");
+
+        }
+
+        public static string Left(string value, int maxLength)
+        {
+            if (string.IsNullOrEmpty(value)) return value;
+            maxLength = Math.Abs(maxLength);
+
+            return (value.Length <= maxLength
+                   ? value
+                   : value.Substring(0, maxLength)
+                   );
+        }
     }
 }

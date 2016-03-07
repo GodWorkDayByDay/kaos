@@ -80,9 +80,6 @@ namespace Kaos
 
         public static string user;
 
-        public double total;
-        public int qty;
-
         public void inputPenjualan()
         {
             if (label8.Text != "" && textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "")
@@ -101,7 +98,7 @@ namespace Kaos
                         dataGridView1[2, i].Value = Convert.ToString(Convert.ToInt32(dataGridView1[2, i].Value.ToString()) + Convert.ToInt32(textBox2.Text));
                         dataGridView1[4, i].Value = App.strtomoney(Convert.ToString(Convert.ToInt32(dataGridView1[2, i].Value.ToString()) * App.moneytodouble(dataGridView1[3, i].Value.ToString())));
                     }
-                    
+
                 }
 
                 if (newitem == true)
@@ -109,17 +106,30 @@ namespace Kaos
                     dataGridView1.Rows.Add(textBox1.Text, label8.Text, textBox2.Text, textBox3.Text, App.strtomoney((Convert.ToDouble(textBox2.Text) * App.moneytodouble(textBox3.Text)).ToString()));
                 }
 
-                total += ((Convert.ToDouble(textBox2.Text) * App.moneytodouble(textBox3.Text)));
-                label5.Text = "Total: " + App.strtomoney(total.ToString());
-
-                qty += Convert.ToInt32(textBox2.Text);
-                label6.Text = "Qty: " + qty.ToString();
+                calculateTotalQty();
 
                 textBox1.Text = "";
                 textBox2.Text = "";
                 textBox3.Text = "";
+
+                dataGridView1.ClearSelection();
             }
 
+
+        }
+
+        public void calculateTotalQty()
+        {
+            int qty = 0;
+            double total = 0;
+
+            for (int i = 0; i < dataGridView1.RowCount; i++)
+            {
+                qty += App.cInt(dataGridView1[2, i].Value.ToString());
+                total += App.moneytodouble(dataGridView1[4, i].Value.ToString());
+            }
+            label5.Text = "Total: " + App.strtomoney(total.ToString());
+            label6.Text = "Qty: " + qty.ToString();
         }
 
 
@@ -173,6 +183,12 @@ namespace Kaos
             {
                 inputPenjualan();
             }
+
+            if (e.KeyCode == Keys.F7)
+            {
+                button2.PerformClick();
+            }
+
         }
 
         private void textBox2_KeyDown(object sender, KeyEventArgs e)
@@ -193,6 +209,12 @@ namespace Kaos
             {
                 inputPenjualan();
             }
+
+            if (e.KeyCode == Keys.F7)
+            {
+                button2.PerformClick();
+            }
+
         }
 
         private void textBox3_KeyDown(object sender, KeyEventArgs e)
@@ -222,12 +244,7 @@ namespace Kaos
 
         }
 
-      
 
-        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
-        {
-            dataGridView1.ClearSelection();
-        }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
@@ -242,6 +259,99 @@ namespace Kaos
             {
                 MessageBox.Show("Masukkan jumlah angka saja jangan huruf!");
                 textBox2.Text = "";
+            }
+        }
+
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
+                calculateTotalQty();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.RowCount != 0)
+            {
+                DialogResult dlgresult = MessageBox.Show("Simpan penjualan?", "Selesai", MessageBoxButtons.YesNo);
+                if (dlgresult == DialogResult.Yes)
+                {
+                    DateTime tgl = DateTime.Now;
+                    MySqlConnection conn = new MySqlConnection(App.getConnectionString());
+                    MySqlCommand cmd = new MySqlCommand();
+                    try
+                    {
+                        conn.Open();
+                        cmd.Connection = conn;
+
+                        string kode;
+                        string nama;
+                        string jumlah;
+                        string harga;
+                        string subtotal;
+                        double total = 0;
+
+                        for (int i = 0; i < dataGridView1.RowCount; i++)
+                        {
+                            kode = dataGridView1[0, i].Value.ToString();
+                            nama = dataGridView1[1, i].Value.ToString();
+                            jumlah = dataGridView1[2, i].Value.ToString();
+                            harga = App.stripMoney(dataGridView1[3, i].Value.ToString());
+                            subtotal = App.stripMoney(dataGridView1[4, i].Value.ToString());
+
+                            cmd.CommandText = "INSERT INTO penjualan SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + label1.Text + "',Kode='" + kode + "',Nama='" + nama + "',Jumlah='" + jumlah + "',Harga='" + harga + "',Subtotal='" + subtotal + "',User='" + user + "'";
+                            cmd.ExecuteNonQuery();
+
+                            cmd.CommandText = "UPDATE barang SET Stok = Stok - '"+jumlah+"' WHERE Kode = '"+kode+"'";
+                            cmd.ExecuteNonQuery();
+
+                            total += App.cDouble(App.stripMoney(dataGridView1[4, i].Value.ToString()));
+                        }
+
+                        cmd.CommandText = "INSERT INTO penjualancompact SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + label1.Text + "',total='" + total + "',User='" + user + "'";
+                        cmd.ExecuteNonQuery();
+
+
+                        conn.Close();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+
+
+                    ////PRINT INVOICE
+                    //StringBuilder sb = new StringBuilder();
+                    //sb.AppendLine(Convert.ToChar(27) + "a1" + Convert.ToChar(27) + "!4" + "Toko B.H. [KAOS]");
+                    //sb.AppendLine("Tasikmalaya");
+                    //sb.AppendLine(Convert.ToChar(27) + "@");
+                    //sb.AppendLine("Faktur: "+label1.Text + " Sales: " + user);
+                    //sb.AppendLine("Tanggal: "+tgl.ToShortDateString() + " Jam: " + tgl.ToShortTimeString());
+                    //sb.AppendLine("");
+                    //sb.AppendLine("========================================");
+                    //for (int i = 0; i < dataGridView1.RowCount; i++)
+                    //{
+                    //    sb.AppendLine(dataGridView1[0, i].Value.ToString() + " " + dataGridView1[1, i].Value.ToString());
+                    //}
+                    //sb.AppendLine(Convert.ToChar(29) + "VA0");
+
+                    //string invoice = sb.ToString();
+
+                    //System.IO.File.WriteAllText(@"C:\test\invoicekaos.txt", invoice, Encoding.ASCII);
+
+                    //App.shellCommand("copy c:\\test\\invoicekaos.txt \\\\mbs-pc\\epson");
+                    App.printPenjualan(label1.Text, user);
+
+
+                    this.Close();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Penjualan masih kosong!");
             }
         }
     }
