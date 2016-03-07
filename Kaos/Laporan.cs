@@ -120,11 +120,6 @@ namespace Kaos
             //            App.loadTable(dataGridView1, "SELECT * FROM penjualan WHERE Tanggal = '"+ monthCalendar1.SelectionRange.Start.ToShortDateString() + "'");
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
