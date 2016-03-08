@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace Kaos
 {
@@ -89,6 +90,168 @@ namespace Kaos
             {
                 this.Close();
             }
+        }
+
+        public void clearAllFields()
+        {
+            textBox1.Text = "";
+            textBox2.Text = "";
+            textBox3.Text = "";
+            textBox4.Text = "";
+            textBox5.Text = "";
+            textBox6.Text = "";
+            textBox7.Text = "";
+            textBox8.Text = "";
+            comboBox1.Text = "";
+            comboBox2.Text = "";
+            checkBox1.Checked = false;
+            checkBox2.Checked = false;
+            checkBox3.Checked = false;
+            checkBox4.Checked = false;
+            checkBox5.Checked = false;
+            checkBox6.Checked = false;
+            checkBox7.Checked = false;
+            checkBox8.Checked = false;
+            checkBox9.Checked = false;
+            checkBox10.Checked = false;
+            checkBox11.Checked = false;
+        }
+
+        public void insertBarang(string size, MySqlConnection conn, MySqlCommand cmd)
+        {
+            string nama = comboBox1.Text + " " + textBox2.Text + " " + size;
+            string kode = textBox1.Text + size;
+            cmd.CommandText = ("INSERT INTO barang SET Kode = '" + kode + "', Nama = '" + nama + "', Harga = '" + App.stripMoney(textBox4.Text) +
+                "', Stok = '" + textBox5.Text + "', Batas = '" + textBox5.Text + "', Ecer = '" + textBox5.Text + "', HargaBeli = '" + textBox5.Text + "'");
+            cmd.Connection = conn;
+            cmd.ExecuteNonQuery();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text != "" &&
+                textBox2.Text != "" &&
+                textBox3.Text != "" &&
+                textBox4.Text != "" &&
+                textBox5.Text != "" &&
+                textBox6.Text != "" &&
+                textBox7.Text != "" &&
+                textBox8.Text != "" &&
+                comboBox1.Text != "")
+            {
+                if (comboBox2.Text != "" || 
+                    checkBox1.Checked != false ||
+                    checkBox2.Checked != false ||
+                    checkBox3.Checked != false ||
+                    checkBox4.Checked != false ||
+                    checkBox5.Checked != false ||
+                    checkBox6.Checked != false ||
+                    checkBox7.Checked != false ||
+                    checkBox8.Checked != false ||
+                    checkBox9.Checked != false ||
+                    checkBox10.Checked != false ||
+                    checkBox11.Checked != false)
+                {
+
+                    string cek_kode;
+                    cek_kode = Convert.ToString(App.executeScalar("SELECT COUNT(*) FROM barang WHERE Kode = '" + textBox1.Text + "'"));
+                    if (cek_kode != "")
+                    {
+                        MySqlConnection conn = new MySqlConnection(App.getConnectionString());
+                        MySqlCommand cmd = new MySqlCommand();
+
+                        try
+                        {
+                            conn.Open();
+                            if (comboBox2.Text != "")
+                            {
+                                insertBarang(comboBox2.Text, conn, cmd);
+                            }
+
+                            if (checkBox1.Checked != false)
+                            {
+                                insertBarang(checkBox1.Text, conn, cmd);
+                            }
+
+                            if (checkBox2.Checked != false)
+                            {
+                                insertBarang(checkBox2.Text, conn, cmd);
+                            }
+
+                            if (checkBox3.Checked != false)
+                            {
+                                insertBarang(checkBox3.Text, conn, cmd);
+                            }
+
+                            if (checkBox4.Checked != false)
+                            {
+                                insertBarang(checkBox4.Text, conn, cmd);
+                            }
+
+                            if (checkBox5.Checked != false)
+                            {
+                                insertBarang(checkBox5.Text, conn, cmd);
+                            }
+
+                            if (checkBox6.Checked != false)
+                            {
+                                insertBarang(checkBox6.Text, conn, cmd);
+                            }
+
+                            if (checkBox7.Checked != false)
+                            {
+                                insertBarang(checkBox7.Text, conn, cmd);
+                            }
+
+                            if (checkBox8.Checked != false)
+                            {
+                                insertBarang(checkBox8.Text, conn, cmd);
+                            }
+
+                            if (checkBox9.Checked != false)
+                            {
+                                insertBarang(checkBox9.Text, conn, cmd);
+                            }
+
+                            if (checkBox10.Checked != false)
+                            {
+                                insertBarang(checkBox10.Text, conn, cmd);
+                            }
+
+                            if (checkBox11.Checked != false)
+                            {
+                                insertBarang(checkBox11.Text, conn, cmd);
+                            }
+
+                           
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.ToString());
+                        }
+
+
+                        clearAllFields();
+                        MessageBox.Show("Barang sudah masuk. Terima Kasih.");
+
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Kode barang sudah ada.");
+                    }
+
+
+                }
+                else
+                {
+                    MessageBox.Show("Lengkapi data barang.");
+                }
+            }
+
+
+            
         }
     }
 }
