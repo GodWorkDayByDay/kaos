@@ -53,17 +53,17 @@ namespace Kaos
             string ecer = dataGridView1[5, dataGridView1.CurrentRow.Index].Value.ToString();
             string hargabeli = dataGridView1[6, dataGridView1.CurrentRow.Index].Value.ToString();
 
-            EditBarang editbarang = new EditBarang(kode,nama,harga,stok,batas,ecer,hargabeli);
+            EditBarang editbarang = new EditBarang(kode, nama, harga, stok, batas, ecer, hargabeli);
             editbarang.ShowDialog();
-            
 
-    }
+
+        }
 
         private void button3_Click(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow.Selected == true)
             {
-                DialogResult result =  MessageBox.Show("Do you want to delete this item?","Delete",MessageBoxButtons.YesNo);
+                DialogResult result = MessageBox.Show("Do you want to delete this item?", "Delete", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
                     MessageBox.Show("DELETE");
@@ -77,7 +77,7 @@ namespace Kaos
 
         private void textBox9_TextChanged(object sender, EventArgs e)
         {
-            App.loadTable(dataGridView1, "SELECT * FROM barang WHERE Nama LIKE '%"+textBox9.Text+"%'");
+            App.loadTable(dataGridView1, "SELECT * FROM barang WHERE Nama LIKE '%" + textBox9.Text + "%'");
         }
 
         private void Barang_KeyDown(object sender, KeyEventArgs e)
@@ -122,7 +122,7 @@ namespace Kaos
             string nama = comboBox1.Text + " " + textBox2.Text + " " + size;
             string kode = textBox1.Text + size;
             cmd.CommandText = ("INSERT INTO barang SET Kode = '" + kode + "', Nama = '" + nama + "', Harga = '" + App.stripMoney(textBox4.Text) +
-                "', Stok = '" + textBox5.Text + "', Batas = '" + textBox5.Text + "', Ecer = '" + textBox5.Text + "', HargaBeli = '" + textBox5.Text + "'");
+                "', Stok = '" + textBox5.Text + "', Batas = '" + textBox6.Text + "', Ecer = '" + textBox7.Text + "', HargaBeli = '" + textBox3.Text + "', PerLusin = '" + textBox8.Text + "'");
             cmd.Connection = conn;
             cmd.ExecuteNonQuery();
         }
@@ -139,7 +139,7 @@ namespace Kaos
                 textBox8.Text != "" &&
                 comboBox1.Text != "")
             {
-                if (comboBox2.Text != "" || 
+                if (comboBox2.Text != "" ||
                     checkBox1.Checked != false ||
                     checkBox2.Checked != false ||
                     checkBox3.Checked != false ||
@@ -223,7 +223,7 @@ namespace Kaos
                                 insertBarang(checkBox11.Text, conn, cmd);
                             }
 
-                           
+
 
                         }
                         catch (Exception ex)
@@ -251,7 +251,7 @@ namespace Kaos
             }
 
 
-            
+
         }
     }
 }
