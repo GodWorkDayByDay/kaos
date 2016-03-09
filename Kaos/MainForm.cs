@@ -98,6 +98,22 @@ namespace Kaos
             {
                 button1.PerformClick();
             }
+
+            if (e.KeyCode == Keys.F2)
+            {
+                button2.PerformClick();
+            }
+
+            if (e.KeyCode == Keys.F3)
+            {
+                button3.PerformClick();
+            }
+
+            if (e.KeyCode == Keys.F4)
+            {
+                button4.PerformClick();
+            }
+
         }
     }
 }

@@ -30,17 +30,12 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            Syncfusion.Windows.Forms.Tools.DigitalClockRenderer digitalClockRenderer1 = new Syncfusion.Windows.Forms.Tools.DigitalClockRenderer();
-            Syncfusion.Windows.Forms.Tools.ClockRenderer clockRenderer1 = new Syncfusion.Windows.Forms.Tools.ClockRenderer();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.clock1 = new Syncfusion.Windows.Forms.Tools.Clock();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -87,61 +82,47 @@
             // 
             // button1
             // 
+            this.button1.Font = new System.Drawing.Font("Corbel", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Location = new System.Drawing.Point(12, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(150, 46);
             this.button1.TabIndex = 1;
-            this.button1.Text = "Penjualan";
+            this.button1.Text = "Penjualan (F1)";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
+            this.button2.Font = new System.Drawing.Font("Corbel", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button2.Location = new System.Drawing.Point(169, 12);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(150, 46);
             this.button2.TabIndex = 2;
-            this.button2.Text = "Pembelian";
+            this.button2.Text = "Pembelian (F2)";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
+            this.button3.Font = new System.Drawing.Font("Corbel", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.Location = new System.Drawing.Point(325, 12);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(150, 46);
             this.button3.TabIndex = 3;
-            this.button3.Text = "Barang";
+            this.button3.Text = "Barang (F3)";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
+            this.button4.Font = new System.Drawing.Font("Corbel", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button4.Location = new System.Drawing.Point(481, 12);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(150, 46);
             this.button4.TabIndex = 4;
-            this.button4.Text = "Laporan";
+            this.button4.Text = "Laporan (F4)";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // button5
-            // 
-            this.button5.Location = new System.Drawing.Point(637, 12);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(150, 46);
-            this.button5.TabIndex = 5;
-            this.button5.Text = "button5";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // button6
-            // 
-            this.button6.Location = new System.Drawing.Point(793, 12);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(150, 46);
-            this.button6.TabIndex = 6;
-            this.button6.Text = "button6";
-            this.button6.UseVisualStyleBackColor = true;
             // 
             // textBox1
             // 
@@ -151,42 +132,12 @@
             this.textBox1.TabIndex = 9;
             this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
             // 
-            // clock1
-            // 
-            this.clock1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.clock1.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.clock1.BeforeTouchSize = new System.Drawing.Size(75, 75);
-            this.clock1.ClockFormat = "HH:mm:ss";
-            this.clock1.ClockFrame = Syncfusion.Windows.Forms.Tools.ClockFrames.RectangularFrame;
-            this.clock1.ClockShape = Syncfusion.Windows.Forms.Tools.ClockShapes.Rectangle;
-            this.clock1.ClockType = Syncfusion.Windows.Forms.Tools.ClockTypes.Analog;
-            this.clock1.CurrentDateTime = new System.DateTime(2016, 3, 4, 14, 21, 10, 171);
-            this.clock1.CustomTime = new System.DateTime(2016, 3, 4, 14, 21, 10, 171);
-            this.clock1.DigitalRenderer = digitalClockRenderer1;
-            this.clock1.DisplayDates = true;
-            this.clock1.Location = new System.Drawing.Point(1263, 12);
-            this.clock1.MinimumSize = new System.Drawing.Size(75, 75);
-            this.clock1.Name = "clock1";
-            this.clock1.Now = new System.DateTime(((long)(0)));
-            this.clock1.Remainder = new System.DateTime(2016, 3, 4, 14, 21, 10, 171);
-            this.clock1.Renderer = clockRenderer1;
-            this.clock1.ShowClockFrame = false;
-            this.clock1.ShowCustomTimeClock = false;
-            this.clock1.ShowHourDesignator = false;
-            this.clock1.Size = new System.Drawing.Size(75, 75);
-            this.clock1.StopTimer = false;
-            this.clock1.TabIndex = 10;
-            this.clock1.Text = "clock1";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1350, 701);
-            this.Controls.Add(this.clock1);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -209,10 +160,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.TextBox textBox1;
-        private Syncfusion.Windows.Forms.Tools.Clock clock1;
     }
 }
 

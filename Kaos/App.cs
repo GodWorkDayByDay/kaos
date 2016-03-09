@@ -15,7 +15,7 @@ namespace Kaos
         public static bool admin = Convert.ToBoolean(Environment.GetCommandLineArgs()[2].ToString());
         public static string printer = Environment.GetCommandLineArgs()[3].ToString();
 
-    public static string getConnectionString()
+        public static string getConnectionString()
         {
             string[] settings = System.IO.File.ReadAllLines(@"C:\test\settingskaos.ini");
             MySqlConnectionStringBuilder connstring = new MySqlConnectionStringBuilder();
@@ -85,9 +85,9 @@ namespace Kaos
             return result;
         }
 
-//        public static MySqlConnection conn = new MySqlConnection(getConnectionString());
+        //        public static MySqlConnection conn = new MySqlConnection(getConnectionString());
 
-        
+
         public static void loadTable(DataGridView dtv, string search)
         {
             MySqlConnection conn = new MySqlConnection(getConnectionString());
@@ -118,12 +118,12 @@ namespace Kaos
             DataTable dt = new DataTable();
             adapter.Fill(dt);
 
-                foreach (DataRow dr in dt.Rows)
-              {
+            foreach (DataRow dr in dt.Rows)
+            {
                 cmbx.Items.Add(dr["Merk"]);
             }
 
-//            cmbx.DataSource = dt;
+            //            cmbx.DataSource = dt;
         }
 
         public static string mysqlcurrency(string str)
@@ -219,7 +219,7 @@ namespace Kaos
         public static void printPenjualan(string faktur, string sales)
         {
             DateTime tgl = DateTime.Now;
-            DataTable rs = executeReader("SELECT * FROM penjualan WHERE Faktur = '"+faktur+"'");
+            DataTable rs = executeReader("SELECT * FROM penjualan WHERE Faktur = '" + faktur + "'");
 
             //PRINT INVOICE
             StringBuilder sb = new StringBuilder();
@@ -236,7 +236,7 @@ namespace Kaos
             int i = 1;
             foreach (DataRow row in rs.Rows)
             {
-                sb.AppendLine(Left((i.ToString() + ". " + row[3].ToString()),40));
+                sb.AppendLine(Left((i.ToString() + ". " + row[3].ToString()), 40));
                 sb.AppendLine("   " + strtomoney(row[5].ToString()) + Convert.ToChar(9) + "x" + Convert.ToChar(9) + row[4].ToString() + Convert.ToChar(9) + strtomoney(row[6].ToString()));
                 total += Convert.ToDouble(row[6]);
                 qty += Convert.ToInt32(row[4]);
@@ -253,6 +253,42 @@ namespace Kaos
             System.IO.File.WriteAllText(@"C:\test\invoicekaos.txt", sb.ToString());
 
             shellCommand("copy c:\\test\\invoicekaos.txt \\\\mbs-pc\\epson");
+
+        }
+
+        public static void printPembelian(string nota, string user)
+        {
+            DateTime tgl = DateTime.Now;
+            DataTable rs = executeReader("SELECT Kode, Nama, Jumlah FROM pembelian WHERE Nota = '" + nota + "'");
+
+            //PRINT INVOICE
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(Convert.ToChar(27) + "a1" + Convert.ToChar(27) + "!4" + "PEMBELIAN [KAOS]");
+            sb.AppendLine(Convert.ToChar(27) + "@");
+            sb.AppendLine("Nota: " + nota + " User: " + user);
+            sb.AppendLine("Tanggal: " + tgl.ToShortDateString() + " Jam: " + tgl.ToShortTimeString());
+            sb.AppendLine("");
+            sb.AppendLine("=========================================");
+
+            int qty = 0;
+            int i = 1;
+            foreach (DataRow row in rs.Rows)
+            {
+                sb.AppendLine(i.ToString() + ". " + row[0].ToString() + Convert.ToChar(9) + row[1].ToString() + Convert.ToChar(9) + row[2].ToString());
+                qty += Convert.ToInt32(row[2]);
+                i += 1;
+            }
+
+            sb.AppendLine("-----------------------------------------");
+            sb.AppendLine(Convert.ToChar(9) + Convert.ToChar(9) + Convert.ToChar(9) + Convert.ToChar(9) + "       Qty: " + qty.ToString());
+            sb.AppendLine("");
+
+            sb.AppendLine(Convert.ToChar(29) + "VA0");
+
+
+            System.IO.File.WriteAllText(@"C:\test\invoicekaospembelian.txt", sb.ToString());
+
+            shellCommand("copy c:\\test\\invoicekaospembelian.txt \\\\mbs-pc\\epson");
 
         }
 

@@ -86,9 +86,19 @@ namespace Kaos
                 foreach (DataRow row in rdr.Rows)
                 {
                     label4.Text = Convert.ToString(row[0]);
-                    label5.Text = "Per Lusin: " + Convert.ToString(row[1]);
                     textBox4.Text = App.stripMoney(Convert.ToString(row[2]));
-                    perlusin = Convert.ToString(row[1]);
+
+                    if (Convert.ToString(row[1]) != "")
+                    {
+                        label5.Text = "Per Lusin: " + Convert.ToString(row[1]);
+                        perlusin = Convert.ToString(row[1]);
+                    }
+                    else
+                    {
+                        perlusin = "1";
+                        label5.Text = "Per Lusin: 1";
+                    }
+
                     textBox3.Text = "1";
                     textBox3.Focus();
                     textBox3.SelectAll();
@@ -113,25 +123,64 @@ namespace Kaos
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (textBox2.Text != "" && label4.Text != "")
+                addpembelian();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            inputPenjualan();
+            App.printPembelian(textBox1.Text, user);
+            this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (CariBarangForm cari = new CariBarangForm())
+            {
+                cari.ShowDialog();
+
+                textBox2.Text = cari.valueFromCari;
+                textBox3.Focus();
+                // do what ever with result...
+            }
+        }
+
+        public void addpembelian()
+        {
+            bool cekduplicate = false;
+
+            if (textBox2.Text != "" && label4.Text != "")
+            {
+                for (int i = 0; i < dataGridView1.RowCount; i++)
+                {
+                    if (textBox2.Text == dataGridView1[0, i].Value.ToString())
+                    {
+                        cekduplicate = true;
+                    }
+                }
+
+                if (cekduplicate == false)
                 {
                     double jumlahpc = Convert.ToDouble(textBox3.Text) * 12 / Convert.ToInt32(perlusin);
                     dataGridView1.Rows.Add(textBox2.Text, label4.Text, textBox4.Text, textBox3.Text, jumlahpc.ToString());
                     textBox2.Text = "";
                     textBox2.Focus();
                 }
-
+                else
+                {
+                    MessageBox.Show("Kode Barang sudah ada di daftar pembelian");
+                }
             }
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
         {
-            inputPenjualan();
+            if (e.KeyCode == Keys.Delete)
+            {
+                dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
+            }
         }
     }
 }

@@ -29,22 +29,22 @@ namespace Kaos
             string lastfaktur = "";
             try
             {
-                lastfaktur = dataGridView1[1, 0].Value.ToString();
+                lastfaktur = dgv[1, 0].Value.ToString();
             }
             catch (Exception)
             {
             }
              
-            for (int i = 1; i < dataGridView1.RowCount; i++)
+            for (int i = 1; i < dgv.RowCount; i++)
             {
-                subtotal += App.moneytodouble(dataGridView1[6, i].Value.ToString());
-                if (lastfaktur == dataGridView1[1, i].Value.ToString())
+                subtotal += App.moneytodouble(dgv[6, i].Value.ToString());
+                if (lastfaktur == dgv[1, i].Value.ToString())
                 {
-                    dataGridView1.Rows[i].Cells[1].Value = "";
+                    dgv.Rows[i].Cells[1].Value = "";
                 }
                 else
                 {
-                    lastfaktur = dataGridView1.Rows[i].Cells[1].Value.ToString();
+                    lastfaktur = dgv.Rows[i].Cells[1].Value.ToString();
                 }
 
             }
@@ -66,34 +66,23 @@ namespace Kaos
         public void loadLaporanPembelian(DataGridView dgv, string tanggal)
         {
             MySqlConnection conn = new MySqlConnection(App.getConnectionString());
-            DataTable rdr = App.executeReader("SELECT * FROM pembelian WHERE Tanggal = '" + tanggal + "'");
+            DataTable rdr = App.executeReader("SELECT Nota, Kode, Nama, Jumlah, User FROM pembelian WHERE Tanggal = '" + tanggal + "'");
 
-            double subtotal = 0;
 
             foreach (DataRow row in rdr.Rows)
             {
-                dgv.Rows.Add(row[0], row[1], row[2], row[3], row[4], App.strtomoney(row[5].ToString()), App.strtomoney(row[6].ToString()), row[7]);
+                dgv.Rows.Add(row[0], row[1], row[2], row[3]);
             }
 
-            for (int i = 1; i < dataGridView1.RowCount; i++)
+            for (int i = 1; i < dgv.RowCount; i++)
             {
-                subtotal += App.moneytodouble(dataGridView1[6, i].Value.ToString());
-                if (dataGridView1[1, i - 1].Value.ToString() == dataGridView1[1, i].Value.ToString() || dataGridView1[1, i - 1].Value.ToString() == "")
+                if (dgv[0, i - 1].Value.ToString() == dgv[0, i].Value.ToString() || dgv[0, i - 1].Value.ToString() == "")
                 {
-                    dataGridView1.Rows[i].Cells[1].Value = "";
+                    dgv.Rows[i].Cells[1].Value = "";
                 }
 
             }
-            //dataGridView1.Rows.Add("", "", "", "", "", "TOTAL:", App.strtomoney(subtotal.ToString()), "");
-            //dataGridView1[5, dataGridView1.RowCount - 1].Style.Font =  new Font("Arial", 12, FontStyle.Bold);
-            //dataGridView1[6, dataGridView1.RowCount - 1].Style.Font = new Font("Arial", 12, FontStyle.Bold);
-            //dataGridView1[5, dataGridView1.RowCount - 1].Style.ForeColor = Color.Red;
-            //dataGridView1[6, dataGridView1.RowCount - 1].Style.ForeColor = Color.Red;
 
-            //dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.RowCount - 1;
-
-            //dataGridView1[0, dataGridView1.RowCount - 1].Selected = true;
-            label2.Text = "TOTAL: " + App.strtomoney(subtotal.ToString());
         }
 
         public Laporan()
@@ -128,7 +117,7 @@ namespace Kaos
         private void monthCalendar2_DateChanged(object sender, DateRangeEventArgs e)
         {
             dataGridView2.Rows.Clear();
-            loadLaporanPenjualan(dataGridView2, monthCalendar2.SelectionRange.Start.ToShortDateString());
+            loadLaporanPembelian(dataGridView2, monthCalendar2.SelectionRange.Start.ToShortDateString());
             label2.Text = "Tanggal: " + monthCalendar2.SelectionRange.Start.ToShortDateString();
             //            App.loadTable(dataGridView1, "SELECT * FROM penjualan WHERE Tanggal = '"+ monthCalendar1.SelectionRange.Start.ToShortDateString() + "'");
         }
