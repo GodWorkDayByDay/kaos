@@ -115,5 +115,11 @@ namespace Kaos
             }
 
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            LorisanForm lorisan = new LorisanForm();
+            lorisan.ShowDialog();
+        }
     }
 }

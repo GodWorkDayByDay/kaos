@@ -77,6 +77,12 @@
     <Compile Include="Laporan.Designer.cs">
       <DependentUpon>Laporan.cs</DependentUpon>
     </Compile>
+    <Compile Include="LorisanForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LorisanForm.Designer.cs">
+      <DependentUpon>LorisanForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Laporan.resx">
       <DependentUpon>Laporan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LorisanForm.resx">
+      <DependentUpon>LorisanForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

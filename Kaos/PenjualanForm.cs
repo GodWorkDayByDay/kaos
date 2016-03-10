@@ -271,6 +271,19 @@ namespace Kaos
             }
         }
 
+        public void addLorisan(string kode, string jumlah)
+        {
+            DateTime tgl = DateTime.Now;
+            if (App.executeScalar("SELECT Jumlah FROM lorisan WHERE Nama = '" + kode + "' LIMIT 1") == null)
+            {
+                App.executeNonQuery("INSERT INTO lorisan SET Tanggal = '" + tgl.ToShortDateString() + "', Sesi = '0', Nama = '" + kode + "', Jumlah = '" + jumlah + "'");
+            }
+            else
+            {
+                App.executeNonQuery("UPDATE lorisan SET Jumlah = Jumlah + '" + jumlah + "' WHERE Nama = '" + kode + "'");
+            }
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             if (dataGridView1.RowCount != 0)
@@ -304,8 +317,10 @@ namespace Kaos
                             cmd.CommandText = "INSERT INTO penjualan SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + label1.Text + "',Kode='" + kode + "',Nama='" + nama + "',Jumlah='" + jumlah + "',Harga='" + harga + "',Subtotal='" + subtotal + "',User='" + user + "'";
                             cmd.ExecuteNonQuery();
 
-                            cmd.CommandText = "UPDATE barang SET Stok = Stok - '"+jumlah+"' WHERE Kode = '"+kode+"'";
+                            cmd.CommandText = "UPDATE barang SET Stok = Stok - '" + jumlah + "' WHERE Kode = '" + kode + "'";
                             cmd.ExecuteNonQuery();
+
+                            addLorisan(kode, jumlah);
 
                             total += App.cDouble(App.stripMoney(dataGridView1[4, i].Value.ToString()));
                         }
