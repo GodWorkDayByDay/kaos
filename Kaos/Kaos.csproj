@@ -65,6 +65,12 @@
     <Compile Include="CariBarangForm.Designer.cs">
       <DependentUpon>CariBarangForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CetakUlangForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CetakUlangForm.Designer.cs">
+      <DependentUpon>CetakUlangForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditBarang.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CariBarangForm.resx">
       <DependentUpon>CariBarangForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CetakUlangForm.resx">
+      <DependentUpon>CetakUlangForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditBarang.resx">
       <DependentUpon>EditBarang.cs</DependentUpon>

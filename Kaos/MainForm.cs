@@ -121,5 +121,11 @@ namespace Kaos
             LorisanForm lorisan = new LorisanForm();
             lorisan.ShowDialog();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            CetakUlangForm cetakulang = new CetakUlangForm();
+            cetakulang.ShowDialog();
+        }
     }
 }
