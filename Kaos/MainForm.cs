@@ -127,5 +127,11 @@ namespace Kaos
             CetakUlangForm cetakulang = new CetakUlangForm();
             cetakulang.ShowDialog();
         }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            RevisiForm revisi = new RevisiForm();
+            revisi.ShowDialog();
+        }
     }
 }

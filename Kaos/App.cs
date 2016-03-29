@@ -15,6 +15,7 @@ namespace Kaos
         public static bool admin = Convert.ToBoolean(Environment.GetCommandLineArgs()[2].ToString());
         public static string printer = Environment.GetCommandLineArgs()[3].ToString();
 
+
         public static string getConnectionString()
         {
             string[] settings = System.IO.File.ReadAllLines(@"C:\test\settingskaos.ini");
@@ -23,6 +24,7 @@ namespace Kaos
             connstring.UserID = settings[1];
             connstring.Password = settings[2];
             connstring.Database = Environment.GetCommandLineArgs()[1].ToString();
+
 
             return connstring.ToString();
         }
@@ -252,7 +254,7 @@ namespace Kaos
 
             System.IO.File.WriteAllText(@"C:\test\invoicekaos.txt", sb.ToString());
 
-            shellCommand("copy c:\\test\\invoicekaos.txt \\\\mbs-pc\\epson");
+            shellCommand("copy c:\\test\\invoicekaos.txt " + printer);
 
         }
 
@@ -288,7 +290,7 @@ namespace Kaos
 
             System.IO.File.WriteAllText(@"C:\test\invoicekaospembelian.txt", sb.ToString());
 
-            shellCommand("copy c:\\test\\invoicekaospembelian.txt \\\\mbs-pc\\epson");
+            shellCommand("copy c:\\test\\invoicekaospembelian.txt " + printer);
 
         }
 

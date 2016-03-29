@@ -95,7 +95,7 @@ namespace Kaos
 
             System.IO.File.WriteAllText(@"C:\test\lorisankaos.txt", sb.ToString());
 
-            App.shellCommand("copy c:\\test\\lorisankaos.txt \\\\mbs-pc\\epson");
+            App.shellCommand("copy c:\\test\\lorisankaos.txt " + App.printer);
 
             //App.executeNonQuery("DELETE FROM lorisan");
         }

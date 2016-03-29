@@ -68,7 +68,7 @@ namespace Kaos
             }
             else
             {
-                App.shellCommand("copy c:\\test\\lorisankaos.txt \\\\mbs-pc\\epson");
+                App.shellCommand("copy c:\\test\\lorisankaos.txt " + App.printer);
             }
         }
 
