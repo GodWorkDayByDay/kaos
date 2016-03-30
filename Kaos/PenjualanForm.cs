@@ -13,6 +13,8 @@ namespace Kaos
 {
     public partial class PenjualanForm : Form
     {
+        bool retur = false;
+
         public string getFaktur(DateTime tgl)
         {
             string tanggal = tgl.Day.ToString();
@@ -82,12 +84,27 @@ namespace Kaos
 
         public void inputPenjualan()
         {
+            int jumlah = 0;
+
             if (label8.Text != "" && textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "")
             {
+
                 if (textBox2.Text == "0" || textBox2.Text == "")
                 {
-                    textBox2.Text = "1";
+                    jumlah = 1;
                 }
+                else
+                {
+                    jumlah = Convert.ToInt32(textBox2.Text);
+                }
+
+                //RETUR
+                if (retur == true)
+                {
+                    jumlah = jumlah * -1;
+                }
+
+
 
                 bool newitem = true;
                 for (int i = 0; i < dataGridView1.RowCount; i++)
@@ -95,7 +112,7 @@ namespace Kaos
                     if (textBox1.Text == dataGridView1[0, i].Value.ToString())
                     {
                         newitem = false;
-                        dataGridView1[2, i].Value = Convert.ToString(Convert.ToInt32(dataGridView1[2, i].Value.ToString()) + Convert.ToInt32(textBox2.Text));
+                        dataGridView1[2, i].Value = Convert.ToString(Convert.ToInt32(dataGridView1[2, i].Value.ToString()) + jumlah);
                         dataGridView1[4, i].Value = App.strtomoney(Convert.ToString(Convert.ToInt32(dataGridView1[2, i].Value.ToString()) * App.moneytodouble(dataGridView1[3, i].Value.ToString())));
                     }
 
@@ -103,7 +120,7 @@ namespace Kaos
 
                 if (newitem == true)
                 {
-                    dataGridView1.Rows.Add(textBox1.Text, label8.Text, textBox2.Text, textBox3.Text, App.strtomoney((Convert.ToDouble(textBox2.Text) * App.moneytodouble(textBox3.Text)).ToString()));
+                    dataGridView1.Rows.Add(textBox1.Text, label8.Text, jumlah.ToString(), textBox3.Text, App.strtomoney((Convert.ToDouble(jumlah) * App.moneytodouble(textBox3.Text)).ToString()));
                 }
 
                 calculateTotalQty();
@@ -367,6 +384,24 @@ namespace Kaos
             else
             {
                 MessageBox.Show("Penjualan masih kosong!");
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (retur == false)
+            {
+                retur = true;
+                this.BackColor = Color.Yellow;
+                MessageBox.Show("Hati-hati retur barang!");
+                textBox1.Focus();
+            }
+            else
+            {
+                retur = false;
+                this.BackColor = Control.DefaultBackColor;
+                MessageBox.Show("Kembali ke mode penjualan!");
+                textBox1.Focus();
             }
         }
     }

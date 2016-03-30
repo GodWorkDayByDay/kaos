@@ -72,7 +72,7 @@ namespace Kaos
             }
         }
 
-        private void dataGridView2_MouseDown(object sender, MouseEventArgs e)
+        private void dataGridView2_SelectionChanged(object sender, EventArgs e)
         {
             string faktur = dataGridView2[0, dataGridView2.CurrentRow.Index].Value.ToString();
             if (radioButton1.Checked == true)

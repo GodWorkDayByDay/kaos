@@ -35,7 +35,7 @@ namespace Kaos
             {
             }
              
-            for (int i = 1; i < dgv.RowCount; i++)
+            for (int i = 0; i < dgv.RowCount; i++)
             {
                 subtotal += App.moneytodouble(dgv[6, i].Value.ToString());
                 if (lastfaktur == dgv[1, i].Value.ToString())

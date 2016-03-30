@@ -162,7 +162,17 @@ namespace Kaos
 
                 if (cekduplicate == false)
                 {
-                    double jumlahpc = Convert.ToDouble(textBox3.Text) * 12 / Convert.ToInt32(perlusin);
+                    double jumlahpc;
+                    if (radioButton1.Checked == true)
+                    {
+                        jumlahpc = Convert.ToDouble(textBox3.Text) * 12 / Convert.ToInt32(perlusin);
+                    }
+                    else
+                    {
+                        jumlahpc = Convert.ToDouble(textBox3.Text);
+                        textBox3.Text = "---";
+                    }
+
                     dataGridView1.Rows.Add(textBox2.Text, label4.Text, textBox4.Text, textBox3.Text, jumlahpc.ToString());
                     textBox2.Text = "";
                     textBox2.Focus();
@@ -181,6 +191,16 @@ namespace Kaos
             {
                 dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
             }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            label3.Text = "Jumlah (PC)";
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            label3.Text = "Jumlah (Lusin)";
         }
     }
 }
