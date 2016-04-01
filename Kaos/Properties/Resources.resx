@@ -118,10 +118,22 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="batik_rainbow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\batik_rainbow.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="congruent_pentagon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\congruent_pentagon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="polka_dot_patterns_triangles" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\polka-dot-patterns-triangles.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="sign_in" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Sign In.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="splash" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\9780316106191.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Underwear_Etsuko" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Underwear_Etsuko.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

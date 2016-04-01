@@ -11,7 +11,7 @@ namespace Kaos
 {
     class App
     {
-
+        public static string toko = Environment.GetCommandLineArgs()[1].ToString();
         public static bool admin = Convert.ToBoolean(Environment.GetCommandLineArgs()[2].ToString());
         public static string printer = Environment.GetCommandLineArgs()[3].ToString();
 
@@ -273,16 +273,14 @@ namespace Kaos
             sb.AppendLine("=========================================");
 
             int qty = 0;
-            int i = 1;
             foreach (DataRow row in rs.Rows)
             {
-                sb.AppendLine(i.ToString() + ". " + row[0].ToString() + Convert.ToChar(9) + row[1].ToString() + Convert.ToChar(9) + row[2].ToString());
+                sb.AppendLine(row[0].ToString() + Convert.ToChar(9) + row[1].ToString() + Convert.ToChar(9) + row[2].ToString());
                 qty += Convert.ToInt32(row[2]);
-                i += 1;
             }
 
             sb.AppendLine("-----------------------------------------");
-            sb.AppendLine(Convert.ToChar(9) + Convert.ToChar(9) + Convert.ToChar(9) + Convert.ToChar(9) + "       Qty: " + qty.ToString());
+            sb.AppendLine("   " + Convert.ToChar(9) + Convert.ToChar(9) + Convert.ToChar(9) + "Qty: " + qty.ToString());
             sb.AppendLine("");
 
             sb.AppendLine(Convert.ToChar(29) + "VA0");

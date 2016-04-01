@@ -128,7 +128,7 @@
             // 
             this.label4.Location = new System.Drawing.Point(159, 31);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(388, 23);
+            this.label4.Size = new System.Drawing.Size(429, 23);
             this.label4.TabIndex = 4;
             this.label4.Text = "label4";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -144,7 +144,7 @@
             this.Column4});
             this.dataGridView1.Location = new System.Drawing.Point(12, 64);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1133, 442);
+            this.dataGridView1.Size = new System.Drawing.Size(1133, 565);
             this.dataGridView1.TabIndex = 11;
             this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
             // 
@@ -175,21 +175,23 @@
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(553, 37);
+            this.label5.Location = new System.Drawing.Point(485, 17);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.Size = new System.Drawing.Size(103, 13);
             this.label5.TabIndex = 6;
-            this.label5.Text = "label5";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(553, 15);
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.Red;
+            this.label6.Location = new System.Drawing.Point(159, 12);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 13);
+            this.label6.Size = new System.Drawing.Size(53, 13);
             this.label6.TabIndex = 5;
-            this.label6.Text = "label6";
+            this.label6.Text = "User";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // textBox4
             // 

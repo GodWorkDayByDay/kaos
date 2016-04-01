@@ -66,10 +66,6 @@ namespace Kaos
             {
                 App.printPembelian(faktur, "COPY");
             }
-            else
-            {
-                App.shellCommand("copy c:\\test\\lorisankaos.txt " + App.printer);
-            }
         }
 
         private void dataGridView2_SelectionChanged(object sender, EventArgs e)
@@ -87,6 +83,16 @@ namespace Kaos
             {
 
             }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            monthCalendar1.SetDate(DateTime.Now);
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            monthCalendar1.SetDate(DateTime.Now);
         }
     }
 }

@@ -21,9 +21,15 @@ namespace Kaos
 
         private void LorisanForm_Load(object sender, EventArgs e)
         {
-
-            App.loadTable(dataGridView1, "SELECT Nama, Jumlah FROM lorisan");
+            App.loadTable(dataGridView1, "SELECT Sesi, Nama, Jumlah FROM daftarlorisan");
             App.formatDataGridView(dataGridView1);
+
+            DataTable dt = App.executeReader("SELECT DISTINCT Sesi From daftarlorisan");
+            foreach (DataRow row in dt.Rows)
+            {
+                comboBox1.Items.Add(row[0].ToString());
+            }
+            comboBox1.SelectedItem = -1;
         }
 
 
@@ -52,7 +58,7 @@ namespace Kaos
                 }
                 else
                 {
-                    hitungjumlah = ecer - jumlahlorisan;
+                    hitungjumlah = jumlahlorisan;
                 }
             }
             return hitungjumlah;
@@ -60,21 +66,23 @@ namespace Kaos
 
         public void executeLorisan()
         {
-            DataTable lorisantable = App.executeReader("SELECT * FROM lorisan");
+            string sesi = getsesi().ToString();
 
+            DataTable lorisantable = App.executeReader("SELECT * FROM lorisan");
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(Convert.ToChar(27) + "a1" + Convert.ToChar(27) + "!4" + "LORISAN [KAOS]");
             sb.AppendLine(Convert.ToChar(27) + "@");
             sb.AppendLine("Tanggal: " + tgl.ToShortDateString() + " Jam: " + tgl.ToShortTimeString());
-            sb.AppendLine("");
+            sb.AppendLine("Sesi: " + sesi);
             sb.AppendLine("=========================================");
+
 
             foreach (DataRow row in lorisantable.Rows)
             {
                 namabarang = row[2].ToString();
-                ecer = Convert.ToInt32(App.executeScalar("SELECT Ecer FROM barang WHERE Kode = '" + row[2].ToString() + "'"));
-                jumlahbarang = Convert.ToInt32(App.executeScalar("SELECT Stok FROM barang WHERE Kode = '" + row[2].ToString() + "'"));
+                ecer = Convert.ToInt32(App.executeScalar("SELECT Ecer FROM barang WHERE Nama = '" + row[2].ToString() + "'"));
+                jumlahbarang = Convert.ToInt32(App.executeScalar("SELECT Stok FROM barang WHERE Nama = '" + row[2].ToString() + "'"));
                 jumlahlorisan = Convert.ToInt32(App.executeScalar("SELECT Jumlah FROM Lorisan WHERE Nama = '" + row[2].ToString() + "'"));
 
                 hitungjumlah = hitungLorisan(ecer, jumlahbarang, jumlahlorisan);
@@ -82,6 +90,8 @@ namespace Kaos
                 if (hitungjumlah != 0)
                 {
                     sb.AppendLine(namabarang + " ... " + hitungjumlah.ToString());
+
+                    App.executeNonQuery("INSERT INTO daftarlorisan SET Tanggal = '" + DateTime.Now.ToShortDateString() + "' , Sesi = '" + sesi + "', Nama = '" + namabarang + "', Jumlah ='" + hitungjumlah.ToString() + "'");
                 }
 
             }
@@ -93,17 +103,86 @@ namespace Kaos
             sb.AppendLine(Convert.ToChar(29) + "VA0");
 
 
-            System.IO.File.WriteAllText(@"C:\test\lorisankaos.txt", sb.ToString());
+            System.IO.File.WriteAllText(@"C:\test\lorisan.txt", sb.ToString());
 
-            App.shellCommand("copy c:\\test\\lorisankaos.txt " + App.printer);
+            App.shellCommand("copy c:\\test\\lorisan.txt " + App.printer);
 
-            //App.executeNonQuery("DELETE FROM lorisan");
+            App.executeNonQuery("DELETE FROM lorisan");
+
+            this.Close();
         }
 
+        public int getsesi()
+        {
+            return Convert.ToInt32(App.executeScalar("SELECT Sesi FROM daftarlorisan WHERE Tanggal = '" + DateTime.Now.ToShortDateString() + "' ORDER BY Sesi DESC LIMIT 1")) + 1;
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
             executeLorisan();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (comboBox1.Text == "Sesi")
+            {
+                DialogResult result = MessageBox.Show("Cetak Semua Lorisan?", "Cetak", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    DataTable lorisantable = App.executeReader("SELECT Sesi, Nama, Jumlah FROM daftarlorisan WHERE Tanggal = '" + DateTime.Now.ToShortDateString() + "'");
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine(Convert.ToChar(27) + "a1" + Convert.ToChar(27) + "!4" + "LORISAN [KAOS]");
+                    sb.AppendLine(Convert.ToChar(27) + "@");
+                    sb.AppendLine("Tanggal: " + tgl.ToShortDateString());
+                    sb.AppendLine("Sesi: SEMUA");
+                    sb.AppendLine("=========================================");
+
+
+                    foreach (DataRow row in lorisantable.Rows)
+                    {
+                        sb.AppendLine(row[0].ToString() + ". " + row[1].ToString() + " ... " + row[2].ToString());
+                    }
+
+
+                    sb.AppendLine("-----------------------------------------");
+                    sb.AppendLine("");
+
+                    sb.AppendLine(Convert.ToChar(29) + "VA0");
+
+
+                    System.IO.File.WriteAllText(@"C:\test\lorisan.txt", sb.ToString());
+
+                    App.shellCommand("copy c:\\test\\lorisan.txt " + App.printer);
+                }
+            }
+            else
+            {
+                    DataTable lorisantable = App.executeReader("SELECT Sesi, Nama, Jumlah FROM daftarlorisan WHERE Tanggal = '" + DateTime.Now.ToShortDateString() + "' AND Sesi = '"+comboBox1.Text+"'");
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine(Convert.ToChar(27) + "a1" + Convert.ToChar(27) + "!4" + "LORISAN [KAOS]");
+                    sb.AppendLine(Convert.ToChar(27) + "@");
+                    sb.AppendLine("Tanggal: " + tgl.ToShortDateString());
+                    sb.AppendLine("Sesi: " + comboBox1.Text);
+                    sb.AppendLine("=========================================");
+
+
+                    foreach (DataRow row in lorisantable.Rows)
+                    {
+                        sb.AppendLine(row[0].ToString() + ". " + row[1].ToString() + " ... " + row[2].ToString());
+                    }
+
+
+                    sb.AppendLine("-----------------------------------------");
+                    sb.AppendLine("");
+
+                    sb.AppendLine(Convert.ToChar(29) + "VA0");
+
+                    System.IO.File.WriteAllText(@"C:\test\lorisan.txt", sb.ToString());
+
+                    App.shellCommand("copy c:\\test\\lorisan.txt " + App.printer);
+                }
         }
     }
 }

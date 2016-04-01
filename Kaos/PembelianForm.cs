@@ -202,6 +202,16 @@ namespace Kaos
         {
             label3.Text = "Jumlah (Lusin)";
         }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

@@ -331,18 +331,18 @@ namespace Kaos
                             harga = App.stripMoney(dataGridView1[3, i].Value.ToString());
                             subtotal = App.stripMoney(dataGridView1[4, i].Value.ToString());
 
-                            cmd.CommandText = "INSERT INTO penjualan SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + label1.Text + "',Kode='" + kode + "',Nama='" + nama + "',Jumlah='" + jumlah + "',Harga='" + harga + "',Subtotal='" + subtotal + "',User='" + user + "'";
+                            cmd.CommandText = "INSERT INTO penjualan SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + getFaktur(tgl) + "',Kode='" + kode + "',Nama='" + nama + "',Jumlah='" + jumlah + "',Harga='" + harga + "',Subtotal='" + subtotal + "',User='" + user + "'";
                             cmd.ExecuteNonQuery();
 
                             cmd.CommandText = "UPDATE barang SET Stok = Stok - '" + jumlah + "' WHERE Kode = '" + kode + "'";
                             cmd.ExecuteNonQuery();
 
-                            addLorisan(kode, jumlah);
+                            addLorisan(nama, jumlah);
 
                             total += App.cDouble(App.stripMoney(dataGridView1[4, i].Value.ToString()));
                         }
 
-                        cmd.CommandText = "INSERT INTO penjualancompact SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + label1.Text + "',total='" + total + "',User='" + user + "'";
+                        cmd.CommandText = "INSERT INTO penjualancompact SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + getFaktur(tgl) + "',total='" + total + "',User='" + user + "'";
                         cmd.ExecuteNonQuery();
 
 

@@ -83,6 +83,12 @@
     <Compile Include="Laporan.Designer.cs">
       <DependentUpon>Laporan.cs</DependentUpon>
     </Compile>
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
     <Compile Include="LorisanForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -115,6 +121,12 @@
     <Compile Include="RevisiForm.Designer.cs">
       <DependentUpon>RevisiForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserLoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Laporan.resx">
       <DependentUpon>Laporan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LorisanForm.resx">
       <DependentUpon>LorisanForm.cs</DependentUpon>
@@ -161,6 +176,9 @@
     <EmbeddedResource Include="RevisiForm.resx">
       <DependentUpon>RevisiForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserLoginForm.resx">
       <DependentUpon>UserLoginForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -180,6 +198,51 @@
   <ItemGroup>
     <None Include="Resources\Sign In.jpg" />
     <None Include="Resources\9780316106191.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bhsplash.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Underwear_Etsuko.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\batik_rainbow.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\batik_blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\underwear.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\underwears.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\kolor.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\japanese-pattern.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rainbow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clouds.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\polka-dot-patterns-triangles.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\penis.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mens_underwear.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dots.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\congruent_pentagon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

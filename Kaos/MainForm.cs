@@ -19,7 +19,7 @@ namespace Kaos
             InitializeComponent();
         }
 
-        
+
 
 
         /// <summary>
@@ -27,12 +27,41 @@ namespace Kaos
         /// </summary>
         /// <param name="dtv"></param>
         /// <param name="search"></param>
- 
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.CenterToScreen();
-            App.loadTable(dataGridView1, "SELECT * FROM barang");
-            this.ActiveControl = textBox1;
+            this.Hide();
+            Login login = new Login();
+            login.ShowDialog();
+            
+
+            try
+            {
+                this.Show();
+                if (App.toko == "kaos")
+                {
+                    this.BackColor = Color.LightBlue;
+                    this.Text = "Kaos";
+                }
+                else if (App.toko == "bh")
+                {
+                    this.BackColor = Color.Pink;
+                    this.BackgroundImage = Kaos.Properties.Resources.batik_rainbow;
+                    this.Text = "BH";
+                }
+
+
+                this.CenterToScreen();
+                App.loadTable(dataGridView1, "SELECT * FROM barang");
+                dataGridView1.Columns["HargaBeli"].Visible = false;
+
+                this.ActiveControl = textBox1;
+
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Password Salah");
+            }
 
         }
 
@@ -44,7 +73,7 @@ namespace Kaos
 
         private void button1_Click(object sender, EventArgs e)
         {
-            UserLoginForm login = new UserLoginForm("Penjualan") ;
+            UserLoginForm login = new UserLoginForm("Penjualan");
             login.ShowDialog();
         }
 
@@ -132,6 +161,12 @@ namespace Kaos
         {
             RevisiForm revisi = new RevisiForm();
             revisi.ShowDialog();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            SettingsForm settings = new SettingsForm();
+            settings.ShowDialog();
         }
     }
 }
