@@ -50,6 +50,14 @@ namespace Kaos
                     this.Text = "BH";
                 }
 
+                if (App.admin == false)
+                {
+                    button3.Enabled = false;
+                    button7.Enabled = false;
+                    button8.Enabled = false;
+                    button7.Visible = false;
+                    button8.Visible = false;
+                }
 
                 this.CenterToScreen();
                 App.loadTable(dataGridView1, "SELECT * FROM barang");
@@ -91,8 +99,8 @@ namespace Kaos
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Laporan laporan = new Laporan();
-            laporan.ShowDialog();
+            RevisiForm revisi = new RevisiForm();
+            revisi.ShowDialog();
         }
 
         private void dataGridView1_KeyPress(object sender, KeyPressEventArgs e)
@@ -143,6 +151,26 @@ namespace Kaos
                 button4.PerformClick();
             }
 
+            if (e.KeyCode == Keys.F5)
+            {
+                button7.PerformClick();
+            }
+
+            if (e.KeyCode == Keys.F6)
+            {
+                button8.PerformClick();
+            }
+
+            if (e.KeyCode == Keys.F7)
+            {
+                button6.PerformClick();
+            }
+
+            if (e.KeyCode == Keys.F12)
+            {
+                button5.PerformClick();
+            }
+
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -159,8 +187,8 @@ namespace Kaos
 
         private void button7_Click(object sender, EventArgs e)
         {
-            RevisiForm revisi = new RevisiForm();
-            revisi.ShowDialog();
+            Laporan laporan = new Laporan();
+            laporan.ShowDialog();
         }
 
         private void button8_Click(object sender, EventArgs e)

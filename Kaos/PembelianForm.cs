@@ -75,6 +75,7 @@ namespace Kaos
             App.formatDataGridView(dataGridView1);
             textBox1.Text = tgl.Day.ToString() + tgl.Month.ToString() + tgl.Year.ToString() + "-";
             this.ActiveControl = textBox1;
+            textBox1.Select(textBox1.Text.Length, 0);
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)

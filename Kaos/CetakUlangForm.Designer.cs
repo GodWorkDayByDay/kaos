@@ -136,9 +136,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(903, 469);
             this.Controls.Add(this.groupBox1);
+            this.KeyPreview = true;
             this.Name = "CetakUlangForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cetak Ulang";
             this.Load += new System.EventHandler(this.CetakUlangForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CetakUlangForm_KeyDown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();

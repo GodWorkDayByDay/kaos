@@ -130,7 +130,6 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(429, 23);
             this.label4.TabIndex = 4;
-            this.label4.Text = "label4";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // dataGridView1

@@ -97,10 +97,12 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);
+            this.KeyPreview = true;
             this.Name = "LorisanForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Lorisan";
             this.Load += new System.EventHandler(this.LorisanForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LorisanForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

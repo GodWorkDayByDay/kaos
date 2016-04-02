@@ -21,10 +21,10 @@ namespace Kaos
 
         private void LorisanForm_Load(object sender, EventArgs e)
         {
-            App.loadTable(dataGridView1, "SELECT Sesi, Nama, Jumlah FROM daftarlorisan");
+            App.loadTable(dataGridView1, "SELECT Sesi, Nama, Jumlah FROM daftarlorisan WHERE Tanggal = '"+tgl.ToShortDateString()+"'");
             App.formatDataGridView(dataGridView1);
 
-            DataTable dt = App.executeReader("SELECT DISTINCT Sesi From daftarlorisan");
+            DataTable dt = App.executeReader("SELECT DISTINCT Sesi From daftarlorisan WHERE Tanggal = '" + tgl.ToShortDateString() + "'");
             foreach (DataRow row in dt.Rows)
             {
                 comboBox1.Items.Add(row[0].ToString());
@@ -183,6 +183,15 @@ namespace Kaos
 
                     App.shellCommand("copy c:\\test\\lorisan.txt " + App.printer);
                 }
+        }
+
+        private void LorisanForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+
         }
     }
 }

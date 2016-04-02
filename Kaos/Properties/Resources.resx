@@ -124,9 +124,6 @@
   <data name="congruent_pentagon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\congruent_pentagon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="polka_dot_patterns_triangles" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\polka-dot-patterns-triangles.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="sign_in" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Sign In.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

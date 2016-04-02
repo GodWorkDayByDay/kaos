@@ -146,10 +146,12 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.dataGridView1);
+            this.KeyPreview = true;
             this.Name = "RevisiForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Revisi";
             this.Load += new System.EventHandler(this.RevisiForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RevisiForm_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);

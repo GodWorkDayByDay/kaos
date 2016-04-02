@@ -60,6 +60,11 @@ namespace Kaos
                 {
                     this.Close();
                 }
+                else if (textBox1.Text.ToUpper() == "KAOS" || textBox1.Text.ToUpper() == "BH")
+                {
+                    App.admin = false;
+                    this.Close();
+                }
                 else
                 {
                     tries += 1;

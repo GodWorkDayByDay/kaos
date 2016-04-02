@@ -33,12 +33,7 @@ namespace Kaos
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            dataGridView1.Rows.Clear();
-            DataTable table = App.executeReader("SELECT Kode, Nama, Stok, Harga FROM barang WHERE Nama LIKE '%"+textBox1.Text+"%'");
-            foreach (DataRow row in table.Rows)
-            {
-                dataGridView1.Rows.Add(row[0], row[1], row[2], App.strtomoney(row[3].ToString()));
-            }
+            
         }
 
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -54,6 +49,46 @@ namespace Kaos
                 valueFromCari = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
                 this.Close();
             }
+
+            if (e.KeyCode == Keys.Up)
+            {
+                if (dataGridView1.CurrentRow.Index == 0)
+                {
+                    textBox1.Focus();
+                    textBox1.SelectAll();
+                }
+            }
+
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+
+        }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                dataGridView1.Rows.Clear();
+                DataTable table = App.executeReader("SELECT Kode, Nama, Stok, Harga FROM barang WHERE Nama LIKE '%" + textBox1.Text + "%'");
+                foreach (DataRow row in table.Rows)
+                {
+                    dataGridView1.Rows.Add(row[0], row[1], row[2], App.strtomoney(row[3].ToString()));
+                }
+            }
+
+            if (e.KeyCode == Keys.Down)
+            {
+                dataGridView1.Focus();
+
+            }
+
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+
         }
     }
 }

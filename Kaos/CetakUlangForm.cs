@@ -94,5 +94,14 @@ namespace Kaos
         {
             monthCalendar1.SetDate(DateTime.Now);
         }
+
+        private void CetakUlangForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+
+        }
     }
 }

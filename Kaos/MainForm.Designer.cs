@@ -132,7 +132,7 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(150, 46);
             this.button4.TabIndex = 4;
-            this.button4.Text = "Laporan (F4)";
+            this.button4.Text = "Revisi (F4)";
             this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -181,7 +181,7 @@
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(150, 46);
             this.button7.TabIndex = 12;
-            this.button7.Text = "Revisi (F5)";
+            this.button7.Text = "Laporan (F5)";
             this.button7.UseVisualStyleBackColor = false;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
