@@ -231,7 +231,7 @@ namespace Kaos
             sb.AppendLine("Faktur: " + faktur + " Sales: " + sales);
             sb.AppendLine("Tanggal: " + tgl.ToShortDateString() + " Jam: " + tgl.ToShortTimeString());
             sb.AppendLine("");
-            sb.AppendLine("=========================================");
+            sb.AppendLine("========================================");
 
             double total = 0;
             int qty = 0;
@@ -270,7 +270,7 @@ namespace Kaos
             sb.AppendLine("Nota: " + nota + " User: " + user);
             sb.AppendLine("Tanggal: " + tgl.ToShortDateString() + " Jam: " + tgl.ToShortTimeString());
             sb.AppendLine("");
-            sb.AppendLine("=========================================");
+            sb.AppendLine("========================================");
 
             int qty = 0;
             foreach (DataRow row in rs.Rows)

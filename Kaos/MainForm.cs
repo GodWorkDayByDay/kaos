@@ -60,7 +60,7 @@ namespace Kaos
                 }
 
                 this.CenterToScreen();
-                App.loadTable(dataGridView1, "SELECT * FROM barang");
+                App.loadTable(dataGridView1, "SELECT * FROM barang WHERE Nama LIKE '%Hings%'");
                 dataGridView1.Columns["HargaBeli"].Visible = false;
 
                 this.ActiveControl = textBox1;

@@ -322,6 +322,8 @@ namespace Kaos
                         string harga;
                         string subtotal;
                         double total = 0;
+                        double laba = 0;
+                        double labatotal = 0;
 
                         for (int i = 0; i < dataGridView1.RowCount; i++)
                         {
@@ -331,7 +333,11 @@ namespace Kaos
                             harga = App.stripMoney(dataGridView1[3, i].Value.ToString());
                             subtotal = App.stripMoney(dataGridView1[4, i].Value.ToString());
 
-                            cmd.CommandText = "INSERT INTO penjualan SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + getFaktur(tgl) + "',Kode='" + kode + "',Nama='" + nama + "',Jumlah='" + jumlah + "',Harga='" + harga + "',Subtotal='" + subtotal + "',User='" + user + "'";
+                            laba = (Convert.ToDouble(harga) - Convert.ToDouble(App.executeScalar("SELECT HargaBeli FROM barang WHERE Kode = '" + kode + "'").ToString())) * Convert.ToDouble(jumlah);
+                            
+                            labatotal += laba;
+
+                            cmd.CommandText = "INSERT INTO penjualan SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + getFaktur(tgl) + "',Kode='" + kode + "',Nama='" + nama + "',Jumlah='" + jumlah + "',Harga='" + harga + "',Subtotal='" + subtotal + "',Laba='" + laba + "', User='" + user + "'";
                             cmd.ExecuteNonQuery();
 
                             cmd.CommandText = "UPDATE barang SET Stok = Stok - '" + jumlah + "' WHERE Kode = '" + kode + "'";
@@ -342,7 +348,7 @@ namespace Kaos
                             total += App.cDouble(App.stripMoney(dataGridView1[4, i].Value.ToString()));
                         }
 
-                        cmd.CommandText = "INSERT INTO penjualancompact SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + getFaktur(tgl) + "',total='" + total + "',User='" + user + "'";
+                        cmd.CommandText = "INSERT INTO penjualancompact SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + getFaktur(tgl) + "',Total='" + total + "',Laba='" + labatotal + "', Bayar='0', User='" + user + "'";
                         cmd.ExecuteNonQuery();
 
 
@@ -355,26 +361,6 @@ namespace Kaos
                     }
 
 
-                    ////PRINT INVOICE
-                    //StringBuilder sb = new StringBuilder();
-                    //sb.AppendLine(Convert.ToChar(27) + "a1" + Convert.ToChar(27) + "!4" + "Toko B.H. [KAOS]");
-                    //sb.AppendLine("Tasikmalaya");
-                    //sb.AppendLine(Convert.ToChar(27) + "@");
-                    //sb.AppendLine("Faktur: "+label1.Text + " Sales: " + user);
-                    //sb.AppendLine("Tanggal: "+tgl.ToShortDateString() + " Jam: " + tgl.ToShortTimeString());
-                    //sb.AppendLine("");
-                    //sb.AppendLine("========================================");
-                    //for (int i = 0; i < dataGridView1.RowCount; i++)
-                    //{
-                    //    sb.AppendLine(dataGridView1[0, i].Value.ToString() + " " + dataGridView1[1, i].Value.ToString());
-                    //}
-                    //sb.AppendLine(Convert.ToChar(29) + "VA0");
-
-                    //string invoice = sb.ToString();
-
-                    //System.IO.File.WriteAllText(@"C:\test\invoicekaos.txt", invoice, Encoding.ASCII);
-
-                    //App.shellCommand("copy c:\\test\\invoicekaos.txt \\\\mbs-pc\\epson");
                     App.printPenjualan(label1.Text, user);
 
 

@@ -23,7 +23,7 @@ namespace Kaos
             App.formatDataGridView(dataGridView2);
 
             //            DataTable dt = App.executeReader("SELECT Faktur FROM penjualan WHERE Tanggal = '" + DateTime.Now.ToShortDateString() + "'");
-            DataTable dt = App.executeReader("SELECT Faktur FROM penjualancompact WHERE Tanggal = '" + DateTime.Now.ToShortDateString() + "' ORDER BY Faktur DESC LIMIT 5");
+            DataTable dt = App.executeReader("SELECT Faktur FROM penjualancompact WHERE Tanggal = '" + DateTime.Now.ToShortDateString() + "' AND Bayar = '0'");
 
             foreach (DataRow row in dt.Rows)
             {

@@ -23,11 +23,12 @@ namespace Kaos
         {
             App.formatDataGridView(dataGridView1);
 
-            DataTable table = App.executeReader("SELECT Kode, Nama, Stok, Harga FROM barang");
-            foreach (DataRow row in table.Rows)
-            {
-                dataGridView1.Rows.Add(row[0], row[1], row[2], App.strtomoney(row[3].ToString()));
-            }
+            //DataTable table = App.executeReader("SELECT Kode, Nama, Stok, Harga FROM barang");
+            //foreach (DataRow row in table.Rows)
+            //{
+            //    dataGridView1.Rows.Add(row[0], row[1], row[2], App.strtomoney(row[3].ToString()));
+            //}
+
             this.ActiveControl = textBox1;
         }
 
@@ -76,6 +77,7 @@ namespace Kaos
                 {
                     dataGridView1.Rows.Add(row[0], row[1], row[2], App.strtomoney(row[3].ToString()));
                 }
+                textBox1.Text = "";
             }
 
             if (e.KeyCode == Keys.Down)

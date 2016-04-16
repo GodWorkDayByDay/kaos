@@ -19,11 +19,12 @@ namespace Kaos
             DataTable rdr = App.executeReader("SELECT * FROM penjualan WHERE Tanggal = '" + tanggal + "'");
 
             double subtotal = 0;
+            double labatotal = 0;
 
 
             foreach (DataRow row in rdr.Rows)
             {
-                dgv.Rows.Add(row[0], row[1], row[2], row[3], row[4], App.strtomoney(row[5].ToString()), App.strtomoney(row[6].ToString()), row[7]);
+                dgv.Rows.Add(row[0], row[1], row[2], row[3], row[4], App.strtomoney(row[5].ToString()), App.strtomoney(row[6].ToString()), App.strtomoney(row[7].ToString()), row[8]);
             }
 
             string lastfaktur = "";
@@ -38,6 +39,8 @@ namespace Kaos
             for (int i = 0; i < dgv.RowCount; i++)
             {
                 subtotal += App.moneytodouble(dgv[6, i].Value.ToString());
+                labatotal += App.moneytodouble(dgv[7, i].Value.ToString());
+
                 if (lastfaktur == dgv[1, i].Value.ToString())
                 {
                     dgv.Rows[i].Cells[1].Value = "";
@@ -50,6 +53,7 @@ namespace Kaos
             }
 
             label2.Text = "TOTAL: " + App.strtomoney(subtotal.ToString());
+            label5.Text = "LABA: " + App.strtomoney(labatotal.ToString());
 
             //dataGridView1.Rows.Add("", "", "", "", "", "TOTAL:", App.strtomoney(subtotal.ToString()), "");
             //dataGridView1[5, dataGridView1.RowCount - 1].Style.Font =  new Font("Arial", 12, FontStyle.Bold);

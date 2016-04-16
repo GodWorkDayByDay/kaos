@@ -33,6 +33,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Iconshock-Super-Vista-Accounting-Cashbox.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -207,6 +210,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\congruent_pentagon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Aha-Soft-Universal-Shop-Cash-register.ico" />
+    <Content Include="Iconshock-Super-Vista-Accounting-Cashbox.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

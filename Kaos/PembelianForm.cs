@@ -71,6 +71,15 @@ namespace Kaos
 
         private void PembelianForm_Load(object sender, EventArgs e)
         {
+            if (App.admin == false)
+            {
+                radioButton2.Checked = true;
+                radioButton1.Enabled = false;
+                label7.Visible = false;
+                textBox4.Enabled = false;
+                textBox4.Visible = false;
+            }
+
             label6.Text = user;
             App.formatDataGridView(dataGridView1);
             textBox1.Text = tgl.Day.ToString() + tgl.Month.ToString() + tgl.Year.ToString() + "-";
