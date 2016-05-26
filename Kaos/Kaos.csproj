@@ -210,9 +210,6 @@
     <None Include="Resources\batik_rainbow.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\congruent_pentagon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Aha-Soft-Universal-Shop-Cash-register.ico" />
     <Content Include="Iconshock-Super-Vista-Accounting-Cashbox.ico" />
     <None Include="Resources\bubble.jpg" />

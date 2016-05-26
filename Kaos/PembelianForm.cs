@@ -78,9 +78,11 @@ namespace Kaos
                 label7.Visible = false;
                 textBox4.Enabled = false;
                 textBox4.Visible = false;
+                dataGridView1.Columns[2].Visible = false;
             }
 
             label6.Text = user;
+            App2.DoubleBuffered(dataGridView1, true);
             App.formatDataGridView(dataGridView1);
             textBox1.Text = tgl.Day.ToString() + tgl.Month.ToString() + tgl.Year.ToString() + "-";
             this.ActiveControl = textBox1;
@@ -175,7 +177,7 @@ namespace Kaos
                     double jumlahpc;
                     if (radioButton1.Checked == true)
                     {
-                        jumlahpc = Convert.ToDouble(textBox3.Text) * 12 / Convert.ToInt32(perlusin);
+                        jumlahpc = Convert.ToDouble(textBox3.Text) * Convert.ToInt32(perlusin);
                     }
                     else
                     {
