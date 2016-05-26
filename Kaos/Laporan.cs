@@ -96,6 +96,8 @@ namespace Kaos
 
         private void Laporan_Load(object sender, EventArgs e)
         {
+            App2.DoubleBuffered(dataGridView1, true);
+            App2.DoubleBuffered(dataGridView2, true);
             DateTime tgl = DateTime.Now;
             //App.loadTable(dataGridView1, "SELECT * FROM penjualan WHERE Tanggal = '" + tgl.ToShortDateString() + "'");
             loadLaporanPenjualan(dataGridView1, tgl.ToShortDateString());

@@ -21,6 +21,7 @@ namespace Kaos
 
         private void Barang_Load(object sender, EventArgs e)
         {
+            App2.DoubleBuffered(dataGridView1, true);
             App.loadTable(dataGridView1, "SELECT * FROM barang");
             App.loadComboBox(comboBox1, "SELECT * FROM merk");
             dataGridView1.CurrentRow.Selected = false;
@@ -52,11 +53,14 @@ namespace Kaos
             string batas = dataGridView1[4, dataGridView1.CurrentRow.Index].Value.ToString();
             string ecer = dataGridView1[5, dataGridView1.CurrentRow.Index].Value.ToString();
             string hargabeli = dataGridView1[6, dataGridView1.CurrentRow.Index].Value.ToString();
+            string perlusin = dataGridView1[7, dataGridView1.CurrentRow.Index].Value.ToString();
+            string cari = textBox9.Text;
 
-            EditBarang editbarang = new EditBarang(kode, nama, harga, stok, batas, ecer, hargabeli);
+            EditBarang editbarang = new EditBarang(kode, nama, harga, stok, batas, ecer, hargabeli, perlusin, cari);
             editbarang.ShowDialog();
 
 
+            App.loadTable(dataGridView1, "SELECT * FROM barang WHERE Nama LIKE '%" + textBox9.Text + "%'");
         }
 
         private void button3_Click(object sender, EventArgs e)

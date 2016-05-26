@@ -17,12 +17,12 @@ namespace Kaos
             InitializeComponent();
         }
 
-        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        public void loadCetakTable(String tanggal)
         {
             //dataGridView1.Rows.Clear();
             dataGridView2.Rows.Clear();
 
-            string tanggal = monthCalendar1.SelectionRange.Start.ToShortDateString();
+            //string tanggal = monthCalendar1.SelectionRange.Start.ToShortDateString();
 
             if (radioButton1.Checked == true)
             {
@@ -42,17 +42,21 @@ namespace Kaos
                     dataGridView2.Rows.Add(row[0]);
                 }
             }
-            else
-            {
+        }
 
-            }
-
+        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            loadCetakTable(monthCalendar1.SelectionRange.Start.ToShortDateString());
         }
 
         private void CetakUlangForm_Load(object sender, EventArgs e)
         {
+            App2.DoubleBuffered(dataGridView1, true);
+            App2.DoubleBuffered(dataGridView2, true);
             App.formatDataGridView(dataGridView1);
             App.formatDataGridView(dataGridView2);
+
+            loadCetakTable(DateTime.Now.ToShortDateString());
         }
 
         private void button1_Click(object sender, EventArgs e)

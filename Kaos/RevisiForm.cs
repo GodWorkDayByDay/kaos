@@ -36,11 +36,11 @@ namespace Kaos
         {
             if (e.KeyCode == Keys.Delete)
             {
-                DialogResult result = MessageBox.Show("Hapus barang ini?", "REVISI", MessageBoxButtons.OKCancel);
+                DialogResult result = MessageBox.Show("Batalkan barang ini?", "REVISI", MessageBoxButtons.OKCancel);
                 if (result == DialogResult.OK)
                 {
-                    App.executeNonQuery("DELETE FROM penjualan WHERE Faktur = '" + dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString() + "' AND Kode = '" + dataGridView2[0, dataGridView2.CurrentRow.Index].Value.ToString() + "'");
-                    MessageBox.Show("Barang sudah dihapus dari penjualan");
+                    App.executeNonQuery("UPDATE penjualan SET Jumlah = '0' , Subtotal = '0' WHERE Faktur = '" + dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString() + "' AND Kode = '" + dataGridView2[0, dataGridView2.CurrentRow.Index].Value.ToString() + "'");
+                    MessageBox.Show("Barang sudah dibatalkan dari penjualan");
 
                     dataGridView2.Rows.Clear();
 

@@ -85,7 +85,7 @@ namespace Kaos
         public void inputPenjualan()
         {
             int jumlah = 0;
-
+ 
             if (label8.Text != "" && textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "")
             {
 
@@ -102,6 +102,7 @@ namespace Kaos
                 if (retur == true)
                 {
                     jumlah = jumlah * -1;
+
                 }
 
 
@@ -130,6 +131,8 @@ namespace Kaos
                 textBox3.Text = "";
 
                 dataGridView1.ClearSelection();
+
+                textBox1.Focus();
             }
 
 
@@ -162,6 +165,7 @@ namespace Kaos
             label1.Text = getFaktur(tgl);
             label4.Text = user;
             this.CenterToScreen();
+            App2.DoubleBuffered(dataGridView1, true);
             App.formatDataGridView(dataGridView1);
             this.ActiveControl = textBox1;
         }
@@ -198,7 +202,8 @@ namespace Kaos
 
             if (e.KeyCode == Keys.Enter)
             {
-                inputPenjualan();
+                textBox2.Focus();
+                textBox2.SelectAll();
             }
 
             if (e.KeyCode == Keys.F7)
@@ -305,67 +310,68 @@ namespace Kaos
         {
             if (dataGridView1.RowCount != 0)
             {
-                DialogResult dlgresult = MessageBox.Show("Simpan penjualan?", "Selesai", MessageBoxButtons.YesNo);
-                if (dlgresult == DialogResult.Yes)
+                DateTime tgl = DateTime.Now;
+                MySqlConnection conn = new MySqlConnection(App.getConnectionString());
+                MySqlCommand cmd = new MySqlCommand();
+
+                string lastfaktur = getFaktur(tgl);
+
+                try
                 {
-                    DateTime tgl = DateTime.Now;
-                    MySqlConnection conn = new MySqlConnection(App.getConnectionString());
-                    MySqlCommand cmd = new MySqlCommand();
-                    try
+                    conn.Open();
+                    cmd.Connection = conn;
+
+                    string kode;
+                    string nama;
+                    string jumlah;
+                    string harga;
+                    string subtotal;
+                    double total = 0;
+                    double laba = 0;
+                    double labatotal = 0;
+
+                    for (int i = 0; i < dataGridView1.RowCount; i++)
                     {
-                        conn.Open();
-                        cmd.Connection = conn;
+                        kode = dataGridView1[0, i].Value.ToString();
+                        nama = dataGridView1[1, i].Value.ToString();
+                        jumlah = dataGridView1[2, i].Value.ToString();
+                        harga = App.stripMoney(dataGridView1[3, i].Value.ToString());
+                        subtotal = App.stripMoney(dataGridView1[4, i].Value.ToString());
 
-                        string kode;
-                        string nama;
-                        string jumlah;
-                        string harga;
-                        string subtotal;
-                        double total = 0;
-                        double laba = 0;
-                        double labatotal = 0;
+                        laba = (Convert.ToDouble(harga) - Convert.ToDouble(App.executeScalar("SELECT HargaBeli FROM barang WHERE Kode = '" + kode + "'").ToString())) * Convert.ToDouble(jumlah);
 
-                        for (int i = 0; i < dataGridView1.RowCount; i++)
-                        {
-                            kode = dataGridView1[0, i].Value.ToString();
-                            nama = dataGridView1[1, i].Value.ToString();
-                            jumlah = dataGridView1[2, i].Value.ToString();
-                            harga = App.stripMoney(dataGridView1[3, i].Value.ToString());
-                            subtotal = App.stripMoney(dataGridView1[4, i].Value.ToString());
 
-                            laba = (Convert.ToDouble(harga) - Convert.ToDouble(App.executeScalar("SELECT HargaBeli FROM barang WHERE Kode = '" + kode + "'").ToString())) * Convert.ToDouble(jumlah);
-                            
-                            labatotal += laba;
+                        labatotal += laba;
 
-                            cmd.CommandText = "INSERT INTO penjualan SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + getFaktur(tgl) + "',Kode='" + kode + "',Nama='" + nama + "',Jumlah='" + jumlah + "',Harga='" + harga + "',Subtotal='" + subtotal + "',Laba='" + laba + "', User='" + user + "'";
-                            cmd.ExecuteNonQuery();
-
-                            cmd.CommandText = "UPDATE barang SET Stok = Stok - '" + jumlah + "' WHERE Kode = '" + kode + "'";
-                            cmd.ExecuteNonQuery();
-
-                            addLorisan(nama, jumlah);
-
-                            total += App.cDouble(App.stripMoney(dataGridView1[4, i].Value.ToString()));
-                        }
-
-                        cmd.CommandText = "INSERT INTO penjualancompact SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + getFaktur(tgl) + "',Total='" + total + "',Laba='" + labatotal + "', Bayar='0', User='" + user + "'";
+                        cmd.CommandText = "INSERT INTO penjualan SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + lastfaktur + "',Kode='" + kode + "',Nama='" + nama + "',Jumlah='" + jumlah + "',Harga='" + harga + "',Subtotal='" + subtotal + "',Laba='" + laba + "', User='" + user + "'";
                         cmd.ExecuteNonQuery();
 
+                        cmd.CommandText = "UPDATE barang SET Stok = Stok - '" + jumlah + "' WHERE Kode = '" + kode + "'";
+                        cmd.ExecuteNonQuery();
 
-                        conn.Close();
+                        addLorisan(nama, jumlah);
 
+                        total += App.cDouble(App.stripMoney(dataGridView1[4, i].Value.ToString()));
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString());
-                    }
+
+                    cmd.CommandText = "INSERT INTO penjualancompact SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + lastfaktur + "',Total='" + total + "',Laba='" + labatotal + "', Bayar='0', User='" + user + "'";
+                    cmd.ExecuteNonQuery();
 
 
-                    App.printPenjualan(label1.Text, user);
+                    conn.Close();
 
-
-                    this.Close();
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+
+
+                App.printPenjualan(lastfaktur, user);
+
+
+                this.Close();
+
             }
             else
             {
