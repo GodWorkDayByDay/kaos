@@ -82,7 +82,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(1326, 585);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.TabStop = false;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
             this.dataGridView1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dataGridView1_KeyPress);
             // 
             // button1

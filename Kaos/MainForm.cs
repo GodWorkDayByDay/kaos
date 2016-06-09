@@ -75,11 +75,6 @@ namespace Kaos
         }
 
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             UserLoginForm login = new UserLoginForm("Penjualan");
@@ -196,6 +191,18 @@ namespace Kaos
         {
             SettingsForm settings = new SettingsForm();
             settings.ShowDialog();
+        }
+
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F11)
+            {
+                string kode = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                string nama = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
+                string harga = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
+                Barcode barcode = new Barcode(kode, nama, harga);
+                barcode.ShowDialog();
+            }
         }
     }
 }

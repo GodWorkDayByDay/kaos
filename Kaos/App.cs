@@ -293,6 +293,56 @@ namespace Kaos
 
         }
 
+        public static void printBarcode(string kode, string nama, string harga, string queue, string printerbarcode)
+        {
+            StringBuilder sb = new StringBuilder();
+            //            sb.AppendLine("Tasikmalaya");
+
+            sb.AppendLine(Convert.ToChar(2) + "KI71");
+            sb.AppendLine(Convert.ToChar(2) + "L");
+            sb.AppendLine("A2");
+            sb.AppendLine("D12");
+
+
+            if (kode.Length <= 8)
+            {
+                sb.AppendLine("1e2202500300015A" + kode);
+                sb.AppendLine("111100000150020" + nama);
+                sb.AppendLine("112100000000020" + harga);
+
+                sb.AppendLine("1e2202500300155A" + kode);
+                sb.AppendLine("111100000150160" + nama);
+                sb.AppendLine("112100000000160" + harga);
+
+                sb.AppendLine("1e2202500300295A" + kode);
+                sb.AppendLine("111100000150300" + nama);
+                sb.AppendLine("112100000000300" + harga);
+            }
+            else
+            {
+                sb.AppendLine("1e1102500300015A" + kode);
+                sb.AppendLine("111100000150020" + nama);
+                sb.AppendLine("112100000000020" + harga);
+
+                sb.AppendLine("1e1102500300155A" + kode);
+                sb.AppendLine("111100000150160" + nama);
+                sb.AppendLine("112100000000160" + harga);
+
+                sb.AppendLine("1e1102500300295A" + kode);
+                sb.AppendLine("111100000150300" + nama);
+                sb.AppendLine("112100000000300" + harga);
+            }
+
+            sb.AppendLine("Q" + queue);
+            sb.AppendLine("E");
+            sb.AppendLine(Convert.ToChar(2) + "Q");
+
+            System.IO.File.WriteAllText(@"C:\test\barcode.txt", sb.ToString());
+
+            shellCommand("copy c:\\test\\barcode.txt " + printerbarcode);
+
+        }
+
         public static string Left(string value, int maxLength)
         {
             if (string.IsNullOrEmpty(value)) return value;

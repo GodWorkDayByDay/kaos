@@ -63,6 +63,12 @@
     <Compile Include="Barang.Designer.cs">
       <DependentUpon>Barang.cs</DependentUpon>
     </Compile>
+    <Compile Include="Barcode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Barcode.Designer.cs">
+      <DependentUpon>Barcode.cs</DependentUpon>
+    </Compile>
     <Compile Include="CariBarangForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +150,9 @@
     </Compile>
     <EmbeddedResource Include="Barang.resx">
       <DependentUpon>Barang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Barcode.resx">
+      <DependentUpon>Barcode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CariBarangForm.resx">
       <DependentUpon>CariBarangForm.cs</DependentUpon>
