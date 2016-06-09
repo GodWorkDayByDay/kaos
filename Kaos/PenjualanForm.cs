@@ -346,8 +346,20 @@ namespace Kaos
                         cmd.CommandText = "INSERT INTO penjualan SET Tanggal='" + tgl.ToShortDateString() + "', Faktur='" + lastfaktur + "',Kode='" + kode + "',Nama='" + nama + "',Jumlah='" + jumlah + "',Harga='" + harga + "',Subtotal='" + subtotal + "',Laba='" + laba + "', User='" + user + "'";
                         cmd.ExecuteNonQuery();
 
-                        cmd.CommandText = "UPDATE barang SET Stok = Stok - '" + jumlah + "' WHERE Kode = '" + kode + "'";
-                        cmd.ExecuteNonQuery();
+                        //check if jumlah = 0
+                        int cekjumlah = Convert.ToInt32(App.executeScalar("SELECT Stok FROM barang WHERE Kode = '"+ kode +"'"));
+                        if (cekjumlah - Convert.ToInt32(jumlah) >= 0)
+                        {
+                            cmd.CommandText = "UPDATE barang SET Stok = Stok - '" + jumlah + "' WHERE Kode = '" + kode + "'";
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            MessageBox.Show("PERHATIAN: Jumlah barang " + nama + " sudah 0 di komputer");
+                            cmd.CommandText = "UPDATE barang SET Stok = '0' WHERE Kode = '" + kode + "'";
+                            cmd.ExecuteNonQuery();
+                        }
+
 
                         addLorisan(nama, jumlah);
 

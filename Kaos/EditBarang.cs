@@ -39,7 +39,7 @@ namespace Kaos
             }
             else if (result == DialogResult.Yes && checkBox1.Checked == true)
             {
-                App.executeNonQuery("UPDATE barang SET Harga = '" + textBox3.Text + "', Batas = '" + textBox5.Text + "', Ecer = '" + textBox6.Text + "', HargaBeli = '" + textBox7.Text + "', PerLusin = '" + textBox8.Text + "' WHERE Nama LIKE '%" + hasilpencarian + "%'");
+                App.executeNonQuery("UPDATE barang SET Harga = '" + textBox3.Text + "', Batas = '" + textBox5.Text + "', Ecer = '" + textBox6.Text + "', HargaBeli = '" + textBox7.Text + "', PerLusin = '" + textBox8.Text + "' WHERE Nama LIKE '%" + hasilpencarian + "%' LIMIT 6" );
                 MessageBox.Show("Items changed successfully");
                 this.Close();
             }
